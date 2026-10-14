@@ -34,7 +34,7 @@ cameras, alarms and events to the operator.
 | | |
 |---|---|
 | ![Overview](docs/media/overview.jpg) | ![Live view](docs/media/live.jpg) |
-| ![Events](docs/media/events.jpg) | ![Event detail](docs/media/event_detail.png) |
+| ![Events](docs/media/events.jpg) | ![Overview 2](docs/media/overview2.jpg) |
 | ![Person profile](docs/media/people.jpg) | ![First run](docs/media/settings.jpg) |
 
 ## Download and install
@@ -150,4 +150,5 @@ See `LICENSE`.
 - [Django](https://www.djangoproject.com/) (BSD-3-Clause)
 - [Vazirmatn](https://github.com/rastikerdar/vazirmatn) font (SIL OFL 1.1)
 - [Tabler Icons](https://tabler.io/icons) (MIT)
+
 
