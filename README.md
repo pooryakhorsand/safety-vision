@@ -13,11 +13,24 @@ cameras, alarms and events to the operator.
 <!-- TODO(owner): add the hero GIF -->
 ![Safety Vision demo](docs/media/hero.gif)
 ### Example locations
-![Location 1](docs/media/ppe_demo_first2.gif) ![Location 2](docs/media/ppe_demo_first3.gif)
-![Location 3](docs/media/ppe_demo_second.gif) ![Location 4](docs/media/ppe_demo_third.gif)
+
+<p align="center">
+  <img src="docs/media/ppe_demo_first2.gif" width="100%" alt="Example 1">
+</p>
+
+<p align="center">
+  <img src="docs/media/ppe_demo_first3.gif" width="100%" alt="Example 2">
+</p>
+
+<p align="center">
+  <img src="docs/media/ppe_demo_second.gif" width="100%" alt="Example 3">
+</p>
+
+<p align="center">
+  <img src="docs/media/ppe_demo_third.gif" width="100%" alt="Example 4">
+</p>
 
 
-> Demo footage in this repository is **recorded video**, not a live camera.
 
 ## What it does
 
@@ -50,7 +63,7 @@ cameras, alarms and events to the operator.
 
 Requirements: Windows 10 or 11 (64-bit), 8 GB RAM, several GB of free disk space. An NVIDIA GPU is strongly recommended; the CPU build is much slower. The installer is not code-signed, so Windows SmartScreen may warn you.
 
-Full instructions: [User guide](docs/user_guide.md) Â· [Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ú©Ø§Ø±Ø¨Ø±](docs/fa/user_guide.md)
+Full instructions: [User guide](docs/user_guide.md) · [راهنمای کاربر](docs/fa/user_guide.md)
 
 ## Architecture
 
@@ -64,7 +77,7 @@ flowchart LR
 ```
 
 The engine does all video processing and never touches the database. The web app owns the database and only displays.
-Details: [docs/architecture.md](docs/architecture.md) Â· contract: [docs/engine_api.md](docs/engine_api.md).
+Details: [docs/architecture.md](docs/architecture.md) · contract: [docs/engine_api.md](docs/engine_api.md).
 
 ## Modules
 
@@ -119,7 +132,7 @@ Building the Windows installer: see [desktop/](desktop/) and `.github/workflows/
 | Secrets, database, ports | `.env` (see `.env.example`); installed app: `<data folder>\config\.env` |
 | Engine: models, thresholds, timings | `engine/config/engine.yaml` (see `engine.example.yaml`) |
 | Product name, logo, colour, language, retention, modules | `profiles/<name>/profile.yaml`, selected with `SITE_PROFILE` |
-| Cameras | In the web console, **Settings â†’ Cameras** |
+| Cameras | In the web console, **Settings → Cameras** |
 
 Another customer or brand: copy `profiles/default/`, edit `profile.yaml` and the logo, set `SITE_PROFILE`.
 
