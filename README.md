@@ -8,9 +8,7 @@ cameras, alarms and events to the operator.
 [![Release](https://img.shields.io/github/v/release/pooryakhorsand/safety-vision?include_prereleases)](https://github.com/pooryakhorsand/safety-vision/releases)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 
-<!-- TODO(owner): replace pooryakhorsand/safety-vision in the badges and add a License badge once LICENSE is chosen. -->
 
-<!-- TODO(owner): add the hero GIF -->
 <p align="center"><img src="docs/media/hero.gif" width="100%" alt="Safety Vision demo"></p>
 ### Example locations
 
@@ -91,7 +89,7 @@ A new module is one class in the engine plus one entry in `web/apps/vision_modul
 ## For developers
 
 ```bash
-git clone https://github.com/pooryakhorsand/safety-vision.git && cd REPO
+git clone https://github.com/pooryakhorsand/safety-vision.git && cd safety-vision
 
 # Web environment
 python -m venv .venv-web && . .venv-web/bin/activate     # Windows: .venv-web\Scripts\activate

@@ -1,11 +1,10 @@
-# PPE module: helmet, safety vest, safety shoes
+﻿# PPE module: helmet, safety vest, safety shoes
 
 Watches every person in the camera and raises an event when a required piece of
 protective equipment is missing for long enough. Module key: `ppe`.
 
-<!-- TODO: add the demo GIF here, e.g. ![PPE demo](../../../docs/media/ppe_demo.gif) -->
+<p align="center"><img src="../../../docs/media/hero.gif" width="100%" alt="PPE demo"></p>
 
-> Demo footage in this repository is **recorded video**, not a live camera.
 
 ## What it reports
 
