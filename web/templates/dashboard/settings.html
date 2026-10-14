@@ -1,0 +1,97 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  settings.html — admin only. Hub for users, cameras and modules.
+  {% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Settings" %}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/settings.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">{% translate "Settings" %}</h1>
+  </header>
+
+  <div class="settings-grid">
+    <section class="panel">
+      <header class="panel__header">
+        <h2 class="panel__title">{% icon "users" %}{% translate "Users" %}</h2>
+        <a class="btn btn--small" href="{% url 'accounts:user_list' %}">{% translate "Manage" %}</a>
+      </header>
+      <p class="panel__text">{% translate "Create admin and operator accounts and disable old ones." %}</p>
+    </section>
+
+    <section class="panel">
+      <header class="panel__header">
+        <h2 class="panel__title">{% icon "camera" %}{% translate "Cameras" %}</h2>
+        <a class="btn btn--small" href="{% url 'cameras:list' %}">{% translate "Manage" %}</a>
+      </header>
+      <table class="table table--compact">
+        <thead><tr><th>{% translate "Name" %}</th><th>{% translate "Modules" %}</th><th>{% translate "Status" %}</th></tr></thead>
+        <tbody>
+          {% for camera, camera_modules in camera_rows %}
+          <tr>
+            <td dir="ltr" class="table__ltr">{{ camera.name }}</td>
+            <td>{% for module in camera_modules %}<span class="badge badge--accent">{{ module.name }}</span> {% empty %}—{% endfor %}</td>
+            <td>{% if camera.is_enabled %}<span class="badge badge--ok">{% translate "Enabled" %}</span>{% else %}<span class="badge badge--muted">{% translate "Disabled" %}</span>{% endif %}</td>
+          </tr>
+          {% empty %}
+          <tr><td colspan="3" class="table__empty">{% translate "No cameras yet" %}</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </section>
+
+    <section class="panel">
+      <header class="panel__header">
+        <h2 class="panel__title">{% icon "cpu" %}{% translate "System check" %}</h2>
+        {% if check.engine_state == "online" %}<span class="badge badge--ok">{% translate "Engine online" %}</span>
+        {% elif check.engine_state == "error" %}<span class="badge badge--alarm">{% translate "Engine error" %}</span>
+        {% else %}<span class="badge badge--muted">{% translate "Engine offline" %}</span>{% endif %}
+      </header>
+      {% if check.available %}
+      <dl class="facts">
+        <dt>GPU</dt><dd dir="ltr" class="table__ltr">{% if check.gpu %}{{ check.gpu.name }} · {{ check.gpu.driver }}{% else %}{% translate "Not found" %}{% endif %}</dd>
+        <dt>CUDA</dt><dd>{% if check.cuda_available %}{% translate "Available" %}{% elif check.cuda_available is None %}—{% else %}{% translate "Not available (the engine runs on the CPU, slowly)" %}{% endif %}</dd>
+        <dt>{% translate "Free disk space" %}</dt><dd dir="ltr" class="table__ltr">{% if check.disk %}{{ check.disk.free_gb }} GB{% else %}—{% endif %}</dd>
+        <dt>{% translate "Checked at" %}</dt><dd dir="ltr" class="table__ltr">{{ check.checked_at|date:"Y-m-d H:i"|default:"—" }}</dd>
+      </dl>
+      <table class="table table--compact">
+        <thead><tr><th>{% translate "Model file" %}</th><th>{% translate "Status" %}</th></tr></thead>
+        <tbody>
+          {% for model in check.models %}
+          <tr>
+            <td dir="ltr" class="table__ltr">{{ model.path }}</td>
+            <td>{% if model.found %}<span class="badge badge--ok">{% translate "Found" %}</span>{% else %}<span class="badge badge--alarm">{% translate "Missing" %}</span>{% endif %}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% if check.missing_models %}
+      <p class="panel__text">{% blocktranslate with folder=check.models_dir %}Copy the missing model files into the folder {{ folder }} and restart the engine from the tray icon.{% endblocktranslate %}
+        {% if check.releases_url %}<a href="{{ check.releases_url }}" target="_blank" rel="noopener">{% translate "Download the model files" %}</a>{% endif %}</p>
+      {% endif %}
+      {% if check.engine_failed %}<p class="panel__text">{% translate "The engine stopped several times and was not restarted. See the logs folder." %}</p>{% endif %}
+      {% else %}
+      <p class="panel__text panel__text--muted">{% translate "The system check is available in the installed desktop app." %}</p>
+      {% endif %}
+    </section>
+
+    <section class="panel">
+      <header class="panel__header">
+        <h2 class="panel__title">{% icon "layout-grid" %}{% translate "Modules" %}</h2>
+      </header>
+      <ul class="setting-list">
+        {% for module, enabled in all_modules %}
+        <li class="setting-list__item">
+          <span class="setting-list__icon">{% icon module.icon %}</span>
+          <span class="setting-list__text"><strong>{{ module.name }}</strong><small>{{ module.description }}</small></span>
+          {% if enabled %}<span class="badge badge--ok">{% translate "Enabled" %}</span>{% else %}<span class="badge badge--muted">{% translate "Disabled" %}</span>{% endif %}
+        </li>
+        {% endfor %}
+      </ul>
+      <p class="panel__text panel__text--muted">{% translate "Enabled modules are set in the site profile (profiles/NAME/profile.yaml)." %}</p>
+    </section>
+  </div>
+</div>
+{% endblock %}

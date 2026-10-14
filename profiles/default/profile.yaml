@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# Customer profile ("white-label" settings)
+#
+# Everything that changes from one customer to another lives here.
+# The code stays the same. For a new customer:
+#   1. Copy this folder to profiles/<customer_name>/
+#   2. Edit this file and replace assets/logo.svg
+#   3. Set SITE_PROFILE=<customer_name> in the .env file
+# ---------------------------------------------------------------------------
+
+# Product name shown in the navbar, login page and browser tab.
+# (Placeholder: replace with your own product name.)
+product_name:
+  en: "Safety Vision"
+  fa: "بینایی ایمنی"
+
+# Short name without spaces or symbols (letters and digits only). The desktop app uses it for
+# the install folder, the data folder and the installer file name.
+short_name: "SafetyVision"
+
+# Page where the model files can be downloaded (shown on Settings > System check when a model is missing).
+# Leave empty until you have published a release.
+releases_url: ""
+
+# Name of the site where the system is installed (factory, yard, warehouse, ...).
+site_name:
+  en: "Site 01"
+  fa: "سایت ۰۱"
+
+# Logo file inside this profile's assets/ folder (SVG or PNG).
+logo: "logo.svg"
+
+# Main accent colour of the interface (hex, e.g. "#2f81f7").
+accent_color: "#2f81f7"
+
+# Language used when a user has not chosen one yet: "fa" or "en".
+default_language: "fa"
+
+# Local time zone of the site (IANA name).
+time_zone: "Asia/Tehran"
+
+# Days to keep events, snapshots and clips. Older ones are deleted by
+# "python manage.py run_maintenance" (scheduled daily).
+retention_days: 30
+
+# Vision modules enabled for this customer, in the order shown in the sidebar.
+# Available keys are defined in web/apps/vision_modules/registry.py
+enabled_modules:
+  - ppe

@@ -1,0 +1,22 @@
+{% comment %}
+  status_bar.html — bottom strip: engine state, GPU, FPS, version, clock.
+  Values are refreshed by static/js/status_bar.js from /api/system/status/.
+{% endcomment %}{% load i18n ui_tags %}
+<footer class="status-bar" id="status-bar"
+        data-status-url="{% url 'core:system_status' %}"
+        data-label-online="{% translate 'Engine online' %}"
+        data-label-offline="{% translate 'Engine offline' %}"
+        data-label-error="{% translate 'Engine error' %}">
+  <span class="status-bar__item">
+    <span class="status-dot status-dot--offline" id="engine-dot"></span>
+    <span id="engine-label">{% translate "Engine offline" %}</span>
+  </span>
+  <span class="status-bar__item">{% icon "cpu" %} GPU <span id="gpu-value">—</span></span>
+  <span class="status-bar__item">FPS <span id="fps-value">—</span></span>
+
+  <span class="status-bar__spacer"></span>
+
+  <span class="status-bar__item">{{ brand.site_name }}</span>
+  <span class="status-bar__item">v{{ app_version }}</span>
+  <span class="status-bar__item">{% icon "clock" %} <time id="clock" dir="ltr">--:--:--</time></span>
+</footer>

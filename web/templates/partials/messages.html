@@ -1,0 +1,11 @@
+{% comment %} messages.html — one-line feedback after an action (user created, ...). {% endcomment %}{% load ui_tags %}
+{% if messages %}
+<div class="flash-list">
+  {% for message in messages %}
+  <div class="flash flash--{{ message.tags }}" role="status">
+    {% if message.tags == "error" %}{% icon "alert-triangle" %}{% else %}{% icon "check" %}{% endif %}
+    <span>{{ message }}</span>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}

@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% comment %}
+  login.html — sign-in page (no navbar). No public sign-up:
+  accounts are created by an admin from Settings > Users.
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Sign in" %}{% endblock %}
+{% block body_class %}page-login{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/login.css' %}">{% endblock %}
+
+{% block body %}
+<div class="login">
+  <div class="login__lang">{% include "partials/language_switch.html" %}</div>
+
+  <section class="login__card">
+    <header class="login__header">
+      <img src="{{ brand.logo_url }}" alt="" width="56" height="56">
+      <h1 class="login__product">{{ brand.product_name }}</h1>
+      <p class="login__site">{{ brand.site_name }}</p>
+    </header>
+
+    <form method="post" class="form" novalidate>
+      {% csrf_token %}
+      <input type="hidden" name="next" value="{{ next }}">
+
+      {% if form.non_field_errors %}
+      <div class="flash flash--error" role="alert">{% icon "alert-triangle" %}<span>{% translate "Username or password is incorrect." %}</span></div>
+      {% endif %}
+
+      <label class="field">
+        <span class="field__label">{% translate "Username" %}</span>
+        <input type="text" name="username" value="{{ form.username.value|default:'' }}" required autocomplete="username" autofocus dir="ltr">
+      </label>
+
+      <label class="field">
+        <span class="field__label">{% translate "Password" %}</span>
+        <input type="password" name="password" required autocomplete="current-password" dir="ltr">
+      </label>
+
+      <button type="submit" class="btn btn--primary btn--block">{% icon "lock" %}<span>{% translate "Sign in" %}</span></button>
+    </form>
+
+    <p class="login__note">{% icon "shield-check" %}<span>{% translate "Authorized personnel only. Ask your administrator for an account." %}</span></p>
+  </section>
+
+  <footer class="login__footer">v{{ app_version }}</footer>
+</div>
+{% endblock %}

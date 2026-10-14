@@ -1,0 +1,77 @@
+# Engine settings of the installed desktop app (created on first run in the data folder: config/engine.yaml).
+# Relative paths are relative to the data folder. Model files go in its models/ folder.
+# The web address and the live-view port are set by the launcher at start (they follow free ports).
+# Cameras are NOT listed here: the engine reads them from the web app.
+
+web:
+  base_url: http://127.0.0.1:8000
+  token_env: ENGINE_API_TOKEN        # name of the environment variable that holds the token
+  timeout_seconds: 5
+  heartbeat_seconds: 5
+  cameras_refresh_seconds: 30        # cameras added/edited in the web app are picked up without a restart
+  queue_dir: queue       # failed sends wait here and are retried
+
+device:
+  gpu: 0                             # GPU index, or "cpu"
+  half: false                        # FP16; keep false on GTX 1650
+
+detectors:
+  person:
+    backend: ultralytics             # ultralytics | onnx | tensorrt
+    weights: models/person.pt
+    classes: [0]                     # COCO person
+    imgsz: 640
+    conf: 0.30
+  equipment:
+    backend: ultralytics
+    weights: models/ppe.pt
+    imgsz: 960
+    conf: 0.25
+    iou: 0.50
+    agnostic_nms: true
+
+tracker:
+  type: botsort                      # botsort | iou (iou = tiny tracker, no extra install)
+  reid_weights: models/osnet_x0_25_msmt17.pt
+  with_reid: true
+  track_buffer: 30
+  box_smooth: 0.6                    # 1.0 = no smoothing
+
+reid:                                # used to merge repeat violations of one person (minutes, not days)
+  backend: boxmot                    # boxmot (OSNet) | histogram (no model, weak)
+  weights: models/osnet_x0_25_msmt17.pt
+  sample_every_frames: 3
+  min_crop_height: 96
+  crops_per_track: 4
+  merge_threshold: 0.75
+  max_templates: 8
+  neighbor_cameras: {}               # example: {1: [2], 2: [1]}  (cameras whose people may be the same)
+
+events:
+  confirm_seconds: 3                 # a violation must last this long before it becomes an event
+  clear_seconds: 5                   # ...and be gone this long before the event ends
+  pending_grace_seconds: 1           # a violation may blink out this long without restarting the timer
+  merge_window_minutes: 10
+  snapshot_quality: 85
+  snapshot_max_side: 1280
+
+modules:
+  ppe:
+    zone_margin: 0.15
+    min_contain: 0.5
+    vote_window: 15
+    min_votes: 4
+    # zones, items and item_colors have defaults; override them here when the model's classes differ.
+
+render:
+  max_long_side: 1280
+  crf: 20
+  stream_host: 127.0.0.1             # 0.0.0.0 shares the live view with the network (it has no login)
+  stream_port: 8765
+  stream_fps: 10                     # live view frames per second (detection runs at full speed regardless)
+  stream_max_side: 960
+  stream_jpeg_quality: 80
+
+sources:
+  reconnect_seconds: 5
+  loop_files: false

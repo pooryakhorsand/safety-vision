@@ -1,0 +1,23 @@
+{% extends "app_shell.html" %}
+{% comment %} camera_confirm_delete.html — admin only: confirm before a camera is deleted. {% endcomment %}{% load i18n ui_tags %}
+
+{% block title %}{% translate "Delete camera" %}{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'cameras:list' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "Cameras" %}</a>
+      <h1 class="page__title">{% translate "Delete camera" %}</h1>
+    </div>
+  </header>
+  <form method="post" class="panel form">
+    {% csrf_token %}
+    <p>{% blocktranslate with name=camera.name %}Delete “{{ name }}”? Its past events stay in the list.{% endblocktranslate %}</p>
+    <div>
+      <button type="submit" class="btn btn--primary">{% translate "Delete" %}</button>
+      <a class="btn btn--ghost" href="{% url 'cameras:list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

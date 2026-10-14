@@ -1,0 +1,32 @@
+{% extends "app_shell.html" %}
+{% comment %} user_form.html — admin only: create an admin or operator account. {% endcomment %}{% load i18n ui_tags %}
+
+{% block title %}{% translate "Add user" %}{% endblock %}
+
+{% block content %}
+<div class="page page--narrow">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'accounts:user_list' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "Users" %}</a>
+      <h1 class="page__title">{% translate "Add user" %}</h1>
+    </div>
+  </header>
+
+  <form method="post" class="panel form" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+    <label class="field {% if field.errors %}has-error{% endif %}">
+      <span class="field__label">{{ field.label }}</span>
+      {{ field }}
+      {% for error in field.errors %}<span class="field__error">{{ error }}</span>{% endfor %}
+    </label>
+    {% endfor %}
+    {% for error in form.non_field_errors %}<p class="field__error">{{ error }}</p>{% endfor %}
+
+    <div class="form__actions">
+      <button type="submit" class="btn btn--primary">{% icon "check" %}<span>{% translate "Create user" %}</span></button>
+      <a class="btn" href="{% url 'accounts:user_list' %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

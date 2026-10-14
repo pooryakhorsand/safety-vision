@@ -1,0 +1,69 @@
+/* ==========================================================================
+   tokens.css — design tokens (colours, spacing, fonts).
+   Change the look of the whole product from here.
+   --accent is overridden per customer from profile.yaml (see base.html).
+   ========================================================================== */
+
+@font-face {
+  font-family: "Vazirmatn";
+  src: url("../fonts/Vazirmatn-Variable.woff2") format("woff2");
+  font-weight: 100 900;
+  font-display: swap;
+}
+
+:root {
+  /* Surfaces (dark control-room theme) */
+  --bg-app: #0d1117;
+  --bg-panel: #151b23;
+  --bg-panel-raised: #1b222c;
+  --bg-input: #0f141a;
+  --bg-hover: #212a35;
+  --bg-video: #07090c;
+
+  /* Lines */
+  --line: #273140;
+  --line-strong: #364253;
+
+  /* Text */
+  --text: #e6edf3;
+  --text-muted: #8b98a8;
+  --text-faint: #5f6b7a;
+
+  /* Brand (replaced from the profile) */
+  --accent: #2f81f7;
+  --accent-soft: color-mix(in srgb, var(--accent) 16%, transparent);
+
+  /* Status colours: only used for meaning, never for decoration */
+  --ok: #3fb950;
+  --ok-soft: rgba(63, 185, 80, 0.14);
+  --warn: #d29922;
+  --warn-soft: rgba(210, 153, 34, 0.14);
+  --alarm: #f85149;
+  --alarm-soft: rgba(248, 81, 73, 0.14);
+  --offline: #6e7681;
+
+  /* Shape and spacing */
+  --radius: 6px;
+  --radius-small: 4px;
+  --gap-1: 4px;
+  --gap-2: 8px;
+  --gap-3: 12px;
+  --gap-4: 16px;
+  --gap-5: 24px;
+  --gap-6: 32px;
+
+  /* Fixed bar heights */
+  --navbar-height: 56px;
+  --statusbar-height: 28px;
+  --sidebar-width: 260px;
+
+  /* Type */
+  --font: "Vazirmatn", "Segoe UI", Tahoma, sans-serif;
+  --font-mono: "Consolas", "Menlo", monospace;
+  --text-xs: 12px;
+  --text-sm: 13px;
+  --text-md: 14px;
+  --text-lg: 18px;
+  --text-xl: 22px;
+  --text-xxl: 32px;
+}

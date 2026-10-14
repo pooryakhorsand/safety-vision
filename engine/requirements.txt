@@ -1,0 +1,14 @@
+# Engine environment (separate from the web app).
+# Install PyTorch first, with the CUDA build that matches your driver: https://pytorch.org/get-started/locally/
+# Tested versions are listed in the README ("Tested versions").
+ultralytics>=8.3,<9
+boxmot>=10               # pin the exact version you tested; its API changes between major versions
+opencv-python>=4.9,<5
+numpy>=1.26,<3
+PyYAML>=6.0,<7
+requests>=2.31,<3
+imageio-ffmpeg>=0.5,<1   # H.264 writer when ffmpeg is not installed
+onnxruntime-gpu>=1.18,<2 # ONNX backend (use onnxruntime on a CPU-only machine)
+onnx>=1.16,<2            # model export
+onnxsim>=0.4,<1          # model export (simplifier)
+pytest>=8,<9             # tests

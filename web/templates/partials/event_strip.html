@@ -1,0 +1,14 @@
+{% comment %}
+  event_strip.html — latest events under the camera grid.
+  Filled and refreshed by static/js/live_events.js from /api/events/summary/.
+{% endcomment %}{% load i18n ui_tags %}
+<section class="event-strip" aria-label="{% translate 'Latest events' %}">
+  <header class="event-strip__header">
+    {% icon "activity" %}
+    <span>{% translate "Latest events" %}</span>
+    <a class="event-strip__more" href="{% url 'events:list' %}">{% translate "All events" %}</a>
+  </header>
+  <ol class="event-strip__list" id="event-strip-list">
+    <li class="event-strip__empty">{% translate "No events yet. Events appear here as soon as the engine reports them." %}</li>
+  </ol>
+</section>

@@ -1,0 +1,43 @@
+{% comment %}
+  navbar.html — top bar: brand, page links, language switch, user menu.
+  The Settings link is shown to admins only (the page itself is protected
+  by @admin_required in apps/dashboard/views.py).
+{% endcomment %}{% load i18n ui_tags %}
+<header class="navbar">
+  <a class="navbar__brand" href="{% url 'dashboard:overview' %}">
+    <img src="{{ brand.logo_url }}" alt="" width="28" height="28">
+    <span class="navbar__titles">
+      <span class="navbar__product">{{ brand.product_name }}</span>
+      <span class="navbar__site">{{ brand.site_name }}</span>
+    </span>
+  </a>
+
+  <nav class="navbar__links" aria-label="{% translate 'Main navigation' %}">
+    <a class="navbar__link {% nav_active 'dashboard:overview' %}" href="{% url 'dashboard:overview' %}">{% icon "layout-dashboard" %}<span>{% translate "Overview" %}</span></a>
+    <a class="navbar__link {% nav_active 'dashboard:live' %}" href="{% url 'dashboard:live' %}">{% icon "device-cctv" %}<span>{% translate "Live view" %}</span></a>
+    <a class="navbar__link {% nav_active 'events:list' %}" href="{% url 'events:list' %}">{% icon "list-details" %}<span>{% translate "Events" %}</span></a>
+    <a class="navbar__link {% nav_active 'people:list' %}" href="{% url 'people:list' %}">{% icon "users" %}<span>{% translate "People" %}</span></a>
+    {% if user.is_admin %}
+    <a class="navbar__link {% nav_active 'dashboard:settings' %} {% nav_active 'accounts:user_list' %}" href="{% url 'dashboard:settings' %}">{% icon "settings" %}<span>{% translate "Settings" %}</span></a>
+    {% endif %}
+  </nav>
+
+  <div class="navbar__tools">
+    <a class="alarm-counter" href="{% url 'events:list' %}?status=open" title="{% translate 'Open events' %}">
+      {% icon "bell" %}<span class="alarm-counter__value" id="alarm-count">0</span>
+    </a>
+
+    {% include "partials/language_switch.html" %}
+
+    <div class="user-chip">
+      {% icon "user" %}
+      <span class="user-chip__name">{{ user.display_name }}</span>
+      <span class="badge {% if user.is_admin %}badge--accent{% endif %}">{{ user.get_role_display }}</span>
+    </div>
+
+    <form method="post" action="{% url 'accounts:logout' %}">
+      {% csrf_token %}
+      <button type="submit" class="btn btn--ghost btn--icon" title="{% translate 'Sign out' %}" aria-label="{% translate 'Sign out' %}">{% icon "logout" "flip-rtl" %}</button>
+    </form>
+  </div>
+</header>

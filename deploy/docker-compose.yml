@@ -1,0 +1,29 @@
+# Optional PostgreSQL for a multi-user server setup. The desktop app uses SQLite and does not need this.
+#
+#   POSTGRES_PASSWORD=<choose a strong password> docker compose -f deploy/docker-compose.yml up -d
+#
+# Then in the web app's .env:
+#   DATABASE_URL=postgres://app:<the same password>@127.0.0.1:5432/app
+# and run "python manage.py migrate" from web/.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: app_postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: app
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD to a strong password}
+    ports:
+      - "127.0.0.1:5432:5432"      # local machine only
+    volumes:
+      - app_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U app -d app"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  app_pgdata:

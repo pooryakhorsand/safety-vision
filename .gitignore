@@ -1,0 +1,53 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Secrets and local settings
+.env
+
+# Django runtime files
+web/db.sqlite3*
+web/staticfiles/
+web/media/
+data/
+
+# Model weights and exported engines (publish them as release assets, not in git)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.trt
+
+# Videos and recordings
+*.mp4
+*.avi
+*.mkv
+recordings/
+
+# Editors and OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Local engine settings (copy engine.example.yaml)
+engine/config/engine.yaml
+
+# Tools and build output
+.ruff_cache/
+.pytest_cache/
+*.log
+logs/
+/build/
+/dist/
+desktop/runtime/
+desktop/installer/Output/
+desktop/assets/app.ico
+*.spec
+.venv*/
+
+# Compiled translations (made by scripts/compile_translations.py)
+*.mo

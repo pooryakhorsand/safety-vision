@@ -1,0 +1,72 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  person_list.html — employees an operator can assign to an event.
+  View: apps/people/views.py (person_list).
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "People" %}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/events.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">{% translate "People" %}</h1>
+      <p class="page__subtitle">{% translate "Employees an operator can assign to an event." %}</p>
+    </div>
+    {% if user.is_admin %}
+    <div class="page__actions">
+      <a class="btn btn--primary" href="{% url 'people:create' %}">{% icon "plus" %}<span>{% translate "Add person" %}</span></a>
+    </div>
+    {% endif %}
+  </header>
+
+  <form method="get" class="panel filter-bar" novalidate>
+    <label class="field field--compact">
+      <span class="field__label">{% translate "Search" %}</span>
+      <input type="search" name="q" value="{{ query }}" placeholder="{% translate 'Code, name or department' %}">
+    </label>
+    <label class="field field--compact">
+      <span class="field__label">{% translate "Show" %}</span>
+      <select name="show">
+        <option value="" {% if not show_all %}selected{% endif %}>{% translate "Active only" %}</option>
+        <option value="all" {% if show_all %}selected{% endif %}>{% translate "All" %}</option>
+      </select>
+    </label>
+    <div class="filter-bar__actions">
+      <button type="submit" class="btn btn--primary">{% icon "filter" %}<span>{% translate "Apply" %}</span></button>
+    </div>
+  </form>
+
+  <div class="panel panel--flush">
+    {% if people %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% translate "Employee code" %}</th>
+          <th>{% translate "Full name" %}</th>
+          <th>{% translate "Department" %}</th>
+          <th>{% translate "Status" %}</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for person in people %}
+        <tr>
+          <td class="table__ltr"><a href="{% url 'people:detail' person.pk %}">{{ person.employee_code }}</a></td>
+          <td>{{ person.full_name }}</td>
+          <td>{{ person.department|default:"—" }}</td>
+          <td>{% if person.is_active %}<span class="badge badge--ok">{% translate "Active" %}</span>{% else %}<span class="badge badge--muted">{% translate "Inactive" %}</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      {% icon "users" %}
+      <h2>{% translate "No people found" %}</h2>
+      <p>{% translate "Add employees here, then assign them to events." %}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,9 @@
+# Runtime dependencies for the web application (Django).
+# The GPU inference engine has its own environment and requirements in engine/.
+Django>=5.2,<6.0          # LTS release line
+python-dotenv>=1.0,<2        # loads settings from the .env file
+PyYAML>=6.0,<7               # reads the customer profile (profiles/<name>/profile.yaml)
+dj-database-url>=2.2,<4      # DATABASE_URL -> Django database settings
+psycopg[binary]>=3.2,<4      # PostgreSQL driver (only used when DATABASE_URL is postgres)
+whitenoise>=6.7,<7.0       # serves the static files
+waitress>=3.0,<4.0         # production web server (works on Windows)

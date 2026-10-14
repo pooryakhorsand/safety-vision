@@ -1,0 +1,18 @@
+{% load i18n %}{% comment %}Rows of a breakdown: label, count, share bar. Rows with a url link to the filtered event list.{% endcomment %}
+{% if rows %}
+<ul class="share-list">
+  {% for row in rows %}
+  <li class="share-list__row">
+    <div class="share-list__head">
+      {% if row.other %}<span class="share-list__label">{% translate "Other" %}</span>
+      {% elif row.url %}<a class="share-list__label" href="{{ row.url }}">{{ row.label }}</a>
+      {% else %}<span class="share-list__label">{{ row.label }}</span>{% endif %}
+      <span class="share-list__count">{{ row.count }}</span>
+    </div>
+    <div class="share-list__track"><div class="share-list__fill" style="width: {{ row.share }}%"></div></div>
+  </li>
+  {% endfor %}
+</ul>
+{% else %}
+<p class="empty-note">{% translate "No events in this period" %}</p>
+{% endif %}

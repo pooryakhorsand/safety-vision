@@ -1,0 +1,55 @@
+{% extends "app_shell.html" %}
+{% comment %} user_list.html — admin only: all accounts with role and status. {% endcomment %}{% load i18n ui_tags %}
+
+{% block title %}{% translate "Users" %}{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'dashboard:settings' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "Settings" %}</a>
+      <h1 class="page__title">{% translate "Users" %}</h1>
+    </div>
+    <a class="btn btn--primary" href="{% url 'accounts:user_create' %}">{% icon "user-plus" %}<span>{% translate "Add user" %}</span></a>
+  </header>
+
+  <div class="panel">
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% translate "Username" %}</th>
+          <th>{% translate "Full name" %}</th>
+          <th>{% translate "Role" %}</th>
+          <th>{% translate "Status" %}</th>
+          <th>{% translate "Last sign-in" %}</th>
+          <th class="table__actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for account in users %}
+        <tr>
+          <td dir="ltr" class="table__ltr">{{ account.username }}</td>
+          <td>{{ account.get_full_name|default:"—" }}</td>
+          <td><span class="badge {% if account.is_admin %}badge--accent{% endif %}">{{ account.get_role_display }}</span></td>
+          <td>
+            {% if account.is_active %}<span class="badge badge--ok">{% translate "Active" %}</span>
+            {% else %}<span class="badge badge--muted">{% translate "Disabled" %}</span>{% endif %}
+          </td>
+          <td>{{ account.last_login|date:"Y-m-d H:i"|default:"—" }}</td>
+          <td class="table__actions">
+            {% if account != user %}
+            <form method="post" action="{% url 'accounts:user_toggle_active' account.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn--small">
+                {% if account.is_active %}{% translate "Disable" %}{% else %}{% translate "Enable" %}{% endif %}
+              </button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}

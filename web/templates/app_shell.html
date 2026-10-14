@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% comment %}
+  app_shell.html — the frame around every signed-in page:
+      navbar (top) / page content / status bar (bottom)
+  Pages fill {% block content %}.
+{% endcomment %}{% load static i18n %}
+
+{% block body %}
+<div class="app-shell">
+  {% include "partials/navbar.html" %}
+
+  <main class="app-main" id="main">
+    {% include "partials/messages.html" %}
+    {% block content %}{% endblock %}
+  </main>
+
+  {% include "partials/status_bar.html" %}
+</div>
+{# Settings for static/js/live_events.js (live alarm counters and latest events). #}
+<div id="live-events" hidden
+     data-summary-url="{% url 'events_api:summary' %}"
+     data-label-ongoing="{% translate 'Ongoing' %}"
+     data-label-open="{% translate 'Open' %}"
+     data-label-empty="{% translate 'No events yet. Events appear here as soon as the engine reports them.' %}"></div>
+<script src="{% static 'js/status_bar.js' %}" defer></script>
+<script src="{% static 'js/live_events.js' %}" defer></script>
+{% endblock %}

@@ -1,0 +1,106 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  event_list.html — management channel: filters, table, paging, export.
+  View: apps/events/views.py (event_list). Filters: apps/events/filters.py.
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Events" %}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/events.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <h1 class="page__title">{% translate "Events" %}</h1>
+      <p class="page__subtitle">{% blocktranslate count total=page.paginator.count %}{{ total }} event{% plural %}{{ total }} events{% endblocktranslate %}</p>
+    </div>
+    <div class="page__actions">
+      <a class="btn" href="?{{ query }}{% if query %}&amp;{% endif %}export=csv">{% icon "download" %}<span>{% translate "Export CSV" %}</span></a>
+      <a class="btn" href="?{{ query }}{% if query %}&amp;{% endif %}view=print" target="_blank" rel="noopener">{% icon "printer" %}<span>{% translate "Print / PDF" %}</span></a>
+    </div>
+  </header>
+
+  <form method="get" class="panel filter-bar" novalidate>
+    {% for field in form %}
+    <label class="field field--compact {% if field.errors %}has-error{% endif %}">
+      <span class="field__label">{{ field.label }}</span>
+      {{ field }}
+      {% for error in field.errors %}<span class="field__error">{{ error }}</span>{% endfor %}
+    </label>
+    {% endfor %}
+    <div class="filter-bar__actions">
+      <button type="submit" class="btn btn--primary">{% icon "filter" %}<span>{% translate "Apply" %}</span></button>
+      {% if form.is_filtered %}<a class="btn btn--ghost" href="{% url 'events:list' %}">{% translate "Clear" %}</a>{% endif %}
+    </div>
+  </form>
+
+  <div class="panel panel--flush">
+    {% if page.object_list %}
+    <table class="table event-table">
+      <thead>
+        <tr>
+          <th class="event-table__thumb"></th>
+          <th>{% translate "Time" %}</th>
+          <th>{% translate "Duration" %}</th>
+          <th>{% translate "Camera" %}</th>
+          <th>{% translate "Module" %}</th>
+          <th>{% translate "Event type" %}</th>
+          <th>{% translate "Person" %}</th>
+          <th>{% translate "Track ID" %}</th>
+          <th>{% translate "Status" %}</th>
+          <th class="table__actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for event in page.object_list %}
+        <tr class="event-row severity--{{ event.severity }}">
+          <td class="event-table__thumb">
+            <a href="{% url 'events:detail' event.pk %}" class="thumb" aria-label="{% translate 'Open event' %}">
+              {% if event.snapshot %}<img src="{% url 'events:snapshot' event.pk %}" alt="" loading="lazy">{% else %}{% icon "camera" %}{% endif %}
+            </a>
+          </td>
+          <td class="table__ltr nowrap">{{ event.started_at|date:"Y-m-d H:i:s" }}</td>
+          <td class="table__ltr nowrap">
+            {% if event.is_ongoing %}<span class="badge badge--alarm">{% translate "Ongoing" %}</span>
+            {% else %}{{ event.duration|hms }}{% endif %}
+          </td>
+          <td class="table__ltr">{{ event.camera_name }}</td>
+          <td>{{ event.module_name }}</td>
+          <td><span class="severity-dot"></span>{{ event.type_name }}{% if event.occurrences > 1 %} <span class="badge" title="{% translate 'Occurrences' %}" dir="ltr">×{{ event.occurrences }}</span>{% endif %}</td>
+          <td>{% if event.person %}<a href="{% url 'people:detail' event.person.pk %}">{{ event.person.full_name }}</a>{% else %}<span class="muted">—</span>{% endif %}</td>
+          <td class="table__ltr">{% if event.track_id is not None %}#{{ event.track_id }}{% else %}—{% endif %}</td>
+          <td>
+            {% if event.is_open %}<span class="badge badge--warn">{% translate "Open" %}</span>
+            {% else %}<span class="badge badge--ok" title="{{ event.acknowledged_by.display_name }} · {{ event.acknowledged_at|date:'Y-m-d H:i' }}">{% translate "Acknowledged" %}</span>{% endif %}
+          </td>
+          <td class="table__actions">
+            {% if event.is_open %}
+            <form method="post" action="{% url 'events:acknowledge' event.pk %}">
+              {% csrf_token %}
+              <input type="hidden" name="next" value="{{ request.get_full_path }}">
+              <button type="submit" class="btn btn--small">{% icon "check" %}<span>{% translate "Acknowledge" %}</span></button>
+            </form>
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      {% icon "list-details" %}
+      <h2>{% translate "No events found" %}</h2>
+      <p>{% if form.is_filtered %}{% translate "Try a wider date range or clear the filters." %}{% else %}{% translate "Events appear here as soon as the engine reports them." %}{% endif %}</p>
+    </div>
+    {% endif %}
+  </div>
+
+  {% if page.paginator.num_pages > 1 %}
+  <nav class="pagination" aria-label="{% translate 'Pages' %}">
+    {% if page.has_previous %}<a class="btn btn--small btn--icon" href="?{{ query }}{% if query %}&amp;{% endif %}page={{ page.previous_page_number }}" aria-label="{% translate 'Previous page' %}">{% icon "chevron-left" "flip-rtl" %}</a>{% endif %}
+    <span class="pagination__label" dir="ltr">{{ page.number }} / {{ page.paginator.num_pages }}</span>
+    {% if page.has_next %}<a class="btn btn--small btn--icon" href="?{{ query }}{% if query %}&amp;{% endif %}page={{ page.next_page_number }}" aria-label="{% translate 'Next page' %}">{% icon "chevron-right" "flip-rtl" %}</a>{% endif %}
+  </nav>
+  {% endif %}
+</div>
+{% endblock %}

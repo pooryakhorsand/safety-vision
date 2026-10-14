@@ -1,0 +1,822 @@
+# Persian translation of the web interface.
+# Edit msgstr values, then run: python scripts/compile_translations.py
+msgid ""
+msgstr ""
+"Project-Id-Version: Safety Vision 1.0.0\n"
+"Language: fa\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+msgid "Access denied"
+msgstr "دسترسی مجاز نیست"
+
+msgid "This page is available to administrators only."
+msgstr "این صفحه فقط برای مدیران سیستم در دسترس است."
+
+msgid "Back to overview"
+msgstr "بازگشت به نمای کلی"
+
+msgid "Page not found"
+msgstr "صفحه پیدا نشد"
+
+msgid "Sign in"
+msgstr "ورود"
+
+msgid "Username or password is incorrect."
+msgstr "نام کاربری یا رمز عبور اشتباه است."
+
+msgid "Username"
+msgstr "نام کاربری"
+
+msgid "Password"
+msgstr "رمز عبور"
+
+msgid "Authorized personnel only. Ask your administrator for an account."
+msgstr ""
+"فقط برای افراد مجاز. برای دریافت حساب کاربری با مدیر سیستم تماس بگیرید."
+
+msgid "Add user"
+msgstr "افزودن کاربر"
+
+msgid "Users"
+msgstr "کاربران"
+
+msgid "Create user"
+msgstr "ایجاد کاربر"
+
+msgid "Cancel"
+msgstr "انصراف"
+
+msgid "Settings"
+msgstr "تنظیمات"
+
+msgid "Full name"
+msgstr "نام کامل"
+
+msgid "Role"
+msgstr "نقش"
+
+msgid "Status"
+msgstr "وضعیت"
+
+msgid "Last sign-in"
+msgstr "آخرین ورود"
+
+msgid "Active"
+msgstr "فعال"
+
+msgid "Disabled"
+msgstr "غیرفعال"
+
+msgid "Disable"
+msgstr "غیرفعال کردن"
+
+msgid "Enable"
+msgstr "فعال کردن"
+
+msgid "Events"
+msgstr "رویدادها"
+
+msgid "Management channel"
+msgstr "کانال مدیریتی"
+
+msgid ""
+"Every violation will be listed here with time, camera, module, track ID and "
+"snapshot, with filters and export."
+msgstr ""
+"تمام تخلفات با زمان، دوربین، ماژول، شناسه‌ی فرد و تصویر در اینجا فهرست "
+"می‌شوند؛ همراه با فیلتر و خروجی گرفتن."
+
+msgid "Next phase"
+msgstr "فاز بعدی"
+
+msgid "Live view"
+msgstr "نمای زنده"
+
+msgid "cameras"
+msgstr "دوربین"
+
+msgid "Grid layout"
+msgstr "چیدمان شبکه"
+
+msgid "Previous page"
+msgstr "صفحه‌ی قبل"
+
+msgid "Next page"
+msgstr "صفحه‌ی بعد"
+
+msgid "Offline"
+msgstr "قطع"
+
+msgid "Expand camera"
+msgstr "بزرگ‌نمایی دوربین"
+
+msgid "No signal"
+msgstr "بدون تصویر"
+
+msgid "No cameras yet"
+msgstr "هنوز دوربینی ثبت نشده"
+
+msgid "An administrator can add cameras from Settings."
+msgstr "مدیر سیستم می‌تواند از بخش تنظیمات دوربین اضافه کند."
+
+msgid "Overview"
+msgstr "نمای کلی"
+
+msgid "Alarms today"
+msgstr "هشدارهای امروز"
+
+msgid "Cameras"
+msgstr "دوربین‌ها"
+
+msgid "Online"
+msgstr "آنلاین"
+
+msgid "Cameras report online when the engine is running."
+msgstr ""
+"وقتی موتور پردازش در حال اجرا باشد، وضعیت دوربین‌ها آنلاین گزارش می‌شود."
+
+msgid "Manage"
+msgstr "مدیریت"
+
+msgid "Create admin and operator accounts and disable old ones."
+msgstr "ایجاد حساب مدیر و اپراتور و غیرفعال کردن حساب‌های قدیمی."
+
+msgid "Name"
+msgstr "نام"
+
+msgid "Area"
+msgstr "محدوده"
+
+msgid "Enabled"
+msgstr "فعال"
+
+msgid "Modules"
+msgstr "ماژول‌ها"
+
+msgid ""
+"Enabled modules are set in the site profile (profiles/NAME/profile.yaml)."
+msgstr ""
+"ماژول‌های فعال در پروفایل سایت تعیین می‌شوند (profiles/NAME/profile.yaml)."
+
+msgid "Latest events"
+msgstr "آخرین رویدادها"
+
+msgid "All events"
+msgstr "همه‌ی رویدادها"
+
+msgid "No events yet. Events appear here as soon as the engine reports them."
+msgstr ""
+"هنوز رویدادی ثبت نشده. رویدادها به محض گزارش موتور پردازش در اینجا نمایش "
+"داده می‌شوند."
+
+msgid "Vision modules"
+msgstr "ماژول‌های بینایی"
+
+msgid "Active alarms"
+msgstr "هشدارهای فعال"
+
+msgid "No modules are enabled for this site."
+msgstr "هیچ ماژولی برای این سایت فعال نیست."
+
+msgid "Main navigation"
+msgstr "منوی اصلی"
+
+msgid "Sign out"
+msgstr "خروج"
+
+msgid "Engine online"
+msgstr "موتور پردازش فعال"
+
+msgid "Engine offline"
+msgstr "موتور پردازش خاموش"
+
+msgid "Engine error"
+msgstr "خطای موتور پردازش"
+
+msgid "First name"
+msgstr "نام"
+
+msgid "Last name"
+msgstr "نام خانوادگی"
+
+msgid "Administrator"
+msgstr "مدیر سیستم"
+
+msgid "Operator"
+msgstr "اپراتور"
+
+msgid "role"
+msgstr "نقش"
+
+msgid "user"
+msgstr "کاربر"
+
+msgid "users"
+msgstr "کاربران"
+
+#, python-format
+msgid "User “%(name)s” was created."
+msgstr "کاربر «%(name)s» ایجاد شد."
+
+msgid "You can't disable your own account."
+msgstr "نمی‌توانید حساب کاربری خودتان را غیرفعال کنید."
+
+msgid "Account status updated."
+msgstr "وضعیت حساب به‌روزرسانی شد."
+
+msgid "name"
+msgstr "نام"
+
+msgid "area"
+msgstr "محدوده"
+
+msgid "source"
+msgstr "منبع تصویر"
+
+msgid "RTSP URL, video file path or webcam index. Used by the engine."
+msgstr ""
+"آدرس RTSP، مسیر فایل ویدیو یا شماره‌ی وبکم. توسط موتور پردازش استفاده "
+"می‌شود."
+
+msgid "enabled"
+msgstr "فعال"
+
+msgid "display order"
+msgstr "ترتیب نمایش"
+
+msgid "camera"
+msgstr "دوربین"
+
+msgid "PPE detection"
+msgstr "تجهیزات ایمنی"
+
+msgid "Helmet, safety vest and safety shoes"
+msgstr "کلاه، لباس و کفش ایمنی"
+
+msgid "No cameras for this module"
+msgstr "دوربینی برای این ماژول تعریف نشده"
+
+msgid "An administrator can add cameras and assign modules from Settings."
+msgstr ""
+"مدیر سیستم می‌تواند از بخش تنظیمات دوربین اضافه کند و ماژول‌ها را به آن "
+"اختصاص دهد."
+
+msgid "modules"
+msgstr "ماژول‌ها"
+
+msgid ""
+"Module keys that run on this camera, e.g. [\"ppe\"]. Empty = all enabled "
+"modules."
+msgstr ""
+"کلید ماژول‌هایی که روی این دوربین اجرا می‌شوند، مثلاً [\"ppe\"]. خالی یعنی "
+"همه‌ی ماژول‌های فعال."
+
+msgid "Ongoing"
+msgstr "در جریان"
+
+msgid "Open"
+msgstr "باز"
+
+msgid "Open events"
+msgstr "رویدادهای باز"
+
+msgid "Export CSV"
+msgstr "خروجی CSV"
+
+msgid "Print / PDF"
+msgstr "چاپ / PDF"
+
+msgid "Apply"
+msgstr "اعمال"
+
+msgid "Clear"
+msgstr "پاک کردن"
+
+msgid "Time"
+msgstr "زمان"
+
+msgid "Duration"
+msgstr "مدت"
+
+msgid "Camera"
+msgstr "دوربین"
+
+msgid "Module"
+msgstr "ماژول"
+
+msgid "Event type"
+msgstr "نوع رویداد"
+
+msgid "Track ID"
+msgstr "شناسه‌ی فرد"
+
+msgid "Open event"
+msgstr "باز کردن رویداد"
+
+msgid "Acknowledged"
+msgstr "تأیید شده"
+
+msgid "Acknowledge"
+msgstr "تأیید"
+
+msgid "No events found"
+msgstr "رویدادی پیدا نشد"
+
+msgid "Try a wider date range or clear the filters."
+msgstr "بازه‌ی تاریخ را بزرگ‌تر کنید یا فیلترها را پاک کنید."
+
+msgid "Events appear here as soon as the engine reports them."
+msgstr "رویدادها به محض گزارش موتور پردازش در اینجا نمایش داده می‌شوند."
+
+msgid "Pages"
+msgstr "صفحه‌ها"
+
+msgid "Events report"
+msgstr "گزارش رویدادها"
+
+msgid "Printed"
+msgstr "چاپ شده در"
+
+msgid "Print"
+msgstr "چاپ"
+
+msgid "Filters"
+msgstr "فیلترها"
+
+msgid "Note"
+msgstr "یادداشت"
+
+msgid "Event snapshot"
+msgstr "تصویر رویداد"
+
+msgid "No snapshot for this event."
+msgstr "این رویداد تصویر ندارد."
+
+msgid "Severity"
+msgstr "شدت"
+
+msgid "Started at"
+msgstr "شروع"
+
+msgid "Ended at"
+msgstr "پایان"
+
+msgid "Confidence"
+msgstr "اطمینان"
+
+msgid "Note (optional)"
+msgstr "یادداشت (اختیاری)"
+
+msgid "Worker was warned on site"
+msgstr "به کارگر در محل تذکر داده شد"
+
+msgid "Acknowledged by"
+msgstr "تأیید توسط"
+
+msgid "Acknowledged at"
+msgstr "زمان تأیید"
+
+msgid "Events today"
+msgstr "رویدادهای امروز"
+
+msgid "From"
+msgstr "از تاریخ"
+
+msgid "To"
+msgstr "تا تاریخ"
+
+msgid "All"
+msgstr "همه"
+
+msgid "End date is before start date."
+msgstr "تاریخ پایان قبل از تاریخ شروع است."
+
+msgid "ID"
+msgstr "شناسه"
+
+msgid "Duration (s)"
+msgstr "مدت (ثانیه)"
+
+msgid "Info"
+msgstr "اطلاع"
+
+msgid "Warning"
+msgstr "هشدار"
+
+msgid "Critical"
+msgstr "بحرانی"
+
+msgid "event ID"
+msgstr "شناسه‌ی رویداد"
+
+msgid "camera name"
+msgstr "نام دوربین"
+
+msgid "module"
+msgstr "ماژول"
+
+msgid "event type"
+msgstr "نوع رویداد"
+
+msgid "severity"
+msgstr "شدت"
+
+msgid "track ID"
+msgstr "شناسه‌ی فرد"
+
+msgid "confidence"
+msgstr "اطمینان"
+
+msgid "started at"
+msgstr "شروع"
+
+msgid "ended at"
+msgstr "پایان"
+
+msgid "snapshot"
+msgstr "تصویر"
+
+msgid "clip"
+msgstr "کلیپ"
+
+msgid "status"
+msgstr "وضعیت"
+
+msgid "acknowledged by"
+msgstr "تأیید توسط"
+
+msgid "acknowledged at"
+msgstr "زمان تأیید"
+
+msgid "note"
+msgstr "یادداشت"
+
+msgid "extra data"
+msgstr "داده‌ی اضافی"
+
+msgid "event"
+msgstr "رویداد"
+
+msgid "events"
+msgstr "رویدادها"
+
+msgid "Event acknowledged."
+msgstr "رویداد تأیید شد."
+
+msgid "No helmet"
+msgstr "بدون کلاه ایمنی"
+
+msgid "No safety vest"
+msgstr "بدون لباس ایمنی"
+
+msgid "No safety shoes"
+msgstr "بدون کفش ایمنی"
+
+#, python-format
+msgid "showing the first %(limit)s"
+msgstr "نمایش %(limit)s مورد اول"
+
+#, python-format
+msgid "%(total)s event"
+msgid_plural "%(total)s events"
+msgstr[0] "%(total)s رویداد"
+msgstr[1] "%(total)s رویداد"
+
+msgid "People"
+msgstr "افراد"
+
+msgid "Person"
+msgstr "شخص"
+
+msgid "Occurrences"
+msgstr "تعداد تکرار"
+
+msgid "Who is this?"
+msgstr "این شخص کیست؟"
+
+msgid "Employee code or name"
+msgstr "کد پرسنلی یا نام"
+
+msgid "Save"
+msgstr "ذخیره"
+
+msgid "Assigned by"
+msgstr "ثبت‌شده توسط"
+
+msgid "Open profile"
+msgstr "باز کردن پروفایل"
+
+msgid "Not assigned"
+msgstr "تعیین‌نشده"
+
+msgid "Person saved."
+msgstr "شخص ثبت شد."
+
+msgid "Person removed."
+msgstr "شخص حذف شد."
+
+#, python-format
+msgid "No active person matches “%(text)s”."
+msgstr "هیچ فرد فعالی با «%(text)s» مطابقت ندارد."
+
+msgid "Employees an operator can assign to an event."
+msgstr "کارکنانی که اپراتور می‌تواند به یک رویداد نسبت دهد."
+
+msgid "Add person"
+msgstr "افزودن فرد"
+
+msgid "Edit person"
+msgstr "ویرایش فرد"
+
+msgid "Search"
+msgstr "جستجو"
+
+msgid "Code, name or department"
+msgstr "کد، نام یا واحد"
+
+msgid "Show"
+msgstr "نمایش"
+
+msgid "Active only"
+msgstr "فقط فعال‌ها"
+
+msgid "Employee code"
+msgstr "کد پرسنلی"
+
+msgid "Department"
+msgstr "واحد"
+
+msgid "Inactive"
+msgstr "غیرفعال"
+
+msgid "No people found"
+msgstr "فردی پیدا نشد"
+
+msgid "Add employees here, then assign them to events."
+msgstr "کارکنان را اینجا اضافه کنید، سپس به رویدادها نسبت دهید."
+
+msgid "Edit"
+msgstr "ویرایش"
+
+msgid "Deactivate"
+msgstr "غیرفعال‌سازی"
+
+msgid "Activate"
+msgstr "فعال‌سازی"
+
+#, python-format
+msgid "Last %(days)s days"
+msgstr "%(days)s روز گذشته"
+
+msgid "No events in this period."
+msgstr "در این بازه رویدادی نیست."
+
+msgid "Recent events"
+msgstr "رویدادهای اخیر"
+
+msgid "No events yet."
+msgstr "هنوز رویدادی نیست."
+
+msgid "This employee code is already used."
+msgstr "این کد پرسنلی قبلاً استفاده شده است."
+
+#, python-format
+msgid "“%(name)s” was added."
+msgstr "«%(name)s» اضافه شد."
+
+msgid "Changes saved."
+msgstr "تغییرات ذخیره شد."
+
+msgid "Status updated."
+msgstr "وضعیت به‌روز شد."
+
+msgid "Recorded"
+msgstr "ضبط‌شده"
+
+msgid "employee code"
+msgstr "کد پرسنلی"
+
+msgid "full name"
+msgstr "نام کامل"
+
+msgid "department"
+msgstr "واحد"
+
+msgid "active"
+msgstr "فعال"
+
+msgid "notes"
+msgstr "یادداشت‌ها"
+
+msgid "person"
+msgstr "شخص"
+
+msgid "occurrences"
+msgstr "تعداد تکرار"
+
+msgid "last seen at"
+msgstr "آخرین مشاهده"
+
+msgid "assigned by"
+msgstr "ثبت‌شده توسط"
+
+msgid "assigned at"
+msgstr "زمان ثبت"
+
+msgid "Add camera"
+msgstr "افزودن دوربین"
+
+msgid "Edit camera"
+msgstr "ویرایش دوربین"
+
+msgid "Delete camera"
+msgstr "حذف دوربین"
+
+msgid "Delete"
+msgstr "حذف"
+
+msgid "Source"
+msgstr "منبع"
+
+msgid "State"
+msgstr "وضعیت"
+
+msgid "Unknown"
+msgstr "نامشخص"
+
+msgid "Add a camera to start watching."
+msgstr "برای شروع یک دوربین اضافه کنید."
+
+msgid "The engine is not reporting, so live states are unknown."
+msgstr "Engine گزارش نمی‌دهد، پس وضعیت زنده‌ی دوربین‌ها نامشخص است."
+
+msgid "Which analyses run on this camera."
+msgstr "کدام تحلیل‌ها روی این دوربین اجرا شوند."
+
+msgid "rtsp://user:password@address/stream, a video file path, or a webcam number such as 0."
+msgstr "rtsp://user:password@address/stream، مسیر فایل ویدیو، یا شماره‌ی وب‌کم مثل 0."
+
+msgid "Enter an rtsp:// or http:// address, a full file path, or a webcam number."
+msgstr "آدرس rtsp:// یا http://، مسیر کامل فایل، یا شماره‌ی وب‌کم را وارد کنید."
+
+#, python-format
+msgid "Delete “%(name)s”? Its past events stay in the list."
+msgstr "«%(name)s» حذف شود؟ رویدادهای گذشته‌ی آن در لیست می‌مانند."
+
+#, python-format
+msgid "“%(name)s” was deleted."
+msgstr "«%(name)s» حذف شد."
+
+msgid "Set up"
+msgstr "راه‌اندازی"
+
+msgid "Create the first administrator account."
+msgstr "حساب اولین مدیر سیستم را بسازید."
+
+msgid "Site name"
+msgstr "نام سایت"
+
+msgid "Shown in the top bar, e.g. the name of your plant."
+msgstr "در نوار بالا نمایش داده می‌شود، مثلاً نام کارخانه."
+
+msgid "Language"
+msgstr "زبان"
+
+msgid "Create and continue"
+msgstr "ساخت و ادامه"
+
+msgid "System check"
+msgstr "بررسی سیستم"
+
+msgid "Not found"
+msgstr "پیدا نشد"
+
+msgid "Available"
+msgstr "در دسترس"
+
+msgid "Not available (the engine runs on the CPU, slowly)"
+msgstr "در دسترس نیست (Engine روی CPU و آهسته اجرا می‌شود)"
+
+msgid "Free disk space"
+msgstr "فضای آزاد دیسک"
+
+msgid "Checked at"
+msgstr "زمان بررسی"
+
+msgid "Model file"
+msgstr "فایل مدل"
+
+msgid "Found"
+msgstr "پیدا شد"
+
+msgid "Missing"
+msgstr "موجود نیست"
+
+#, python-format
+msgid "Copy the missing model files into the folder %(folder)s and restart the engine from the tray icon."
+msgstr "فایل‌های مدلِ موجودنشده را در پوشه‌ی %(folder)s قرار دهید و Engine را از آیکون کنار ساعت دوباره راه‌اندازی کنید."
+
+msgid "Download the model files"
+msgstr "دانلود فایل‌های مدل"
+
+msgid "The engine stopped several times and was not restarted. See the logs folder."
+msgstr "Engine چند بار متوقف شد و دیگر راه‌اندازی مجدد نشد. پوشه‌ی logs را ببینید."
+
+msgid "The system check is available in the installed desktop app."
+msgstr "بررسی سیستم در نسخه‌ی نصب‌شده‌ی دسکتاپ در دسترس است."
+
+msgid "site name"
+msgstr "نام سایت"
+
+msgid "default language"
+msgstr "زبان پیش‌فرض"
+
+msgid "site settings"
+msgstr "تنظیمات سایت"
+
+#: web/templates/dashboard/overview.html
+msgid "Today"
+msgstr "امروز"
+
+#: web/templates/dashboard/overview.html
+msgid "7 days"
+msgstr "۷ روز"
+
+#: web/templates/dashboard/overview.html
+msgid "30 days"
+msgstr "۳۰ روز"
+
+#: web/templates/dashboard/overview.html
+msgid "Period"
+msgstr "بازه"
+
+#: web/templates/dashboard/overview.html
+msgid "Not acknowledged"
+msgstr "تأییدنشده"
+
+#: web/templates/dashboard/overview.html
+msgid "Going on now"
+msgstr "در جریان"
+
+#: web/templates/dashboard/overview.html
+msgid "Events over time"
+msgstr "رویدادها در طول زمان"
+
+#: web/templates/dashboard/overview.html
+msgid "By event type"
+msgstr "بر اساس نوع"
+
+#: web/templates/dashboard/overview.html
+msgid "By camera"
+msgstr "بر اساس دوربین"
+
+#: web/templates/dashboard/overview.html
+msgid "Needs attention"
+msgstr "نیازمند رسیدگی"
+
+#: web/templates/dashboard/overview.html
+msgid "See all"
+msgstr "مشاهده همه"
+
+#: web/templates/dashboard/overview.html
+msgid "Print report"
+msgstr "چاپ گزارش"
+
+#: web/templates/dashboard/overview.html
+msgid "Same as previous period"
+msgstr "برابر با دوره قبل"
+
+#: web/templates/dashboard/overview.html
+msgid "Other"
+msgstr "سایر"
+
+#: web/templates/dashboard/overview.html
+msgid "No events in this period"
+msgstr "در این بازه رویدادی ثبت نشده است"
+
+#: web/templates/dashboard/overview.html
+msgid "%(n)s more than the previous period"
+msgstr "%(n)s مورد بیشتر از دوره قبل"
+
+#: web/templates/dashboard/overview.html
+msgid "%(n)s fewer than the previous period"
+msgstr "%(n)s مورد کمتر از دوره قبل"
+
+#: web/templates/dashboard/overview.html
+msgid "In this period"
+msgstr "در این بازه"
+
+#: web/templates/dashboard/overview.html
+msgid "Violations that have not ended"
+msgstr "تخلف‌هایی که هنوز تمام نشده‌اند"
+
+#: web/templates/dashboard/overview.html
+msgid "Events in this period"
+msgstr "رویدادهای این بازه"
+
+#: web/templates/dashboard/overview.html
+msgid "Nothing waiting. All alarms are acknowledged."
+msgstr "موردی در انتظار نیست. همه‌ی هشدارها تأیید شده‌اند."

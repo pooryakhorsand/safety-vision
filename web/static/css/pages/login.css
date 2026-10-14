@@ -1,0 +1,45 @@
+/* login.css — sign-in page only. */
+
+.login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--gap-4);
+  padding: var(--gap-5);
+  background:
+    linear-gradient(color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px) 0 0 / 40px 40px,
+    linear-gradient(90deg, color-mix(in srgb, var(--line) 45%, transparent) 1px, transparent 1px) 0 0 / 40px 40px,
+    var(--bg-app);
+}
+
+.login__lang { position: absolute; inset-block-start: var(--gap-4); inset-inline-end: var(--gap-4); }
+
+.login__card {
+  width: 100%;
+  max-width: 380px;
+  padding: var(--gap-6);
+  background: var(--bg-panel);
+  border: 1px solid var(--line-strong);
+  border-block-start: 3px solid var(--accent);
+  border-radius: var(--radius);
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-5);
+}
+
+.login__header { display: flex; flex-direction: column; align-items: center; gap: var(--gap-2); text-align: center; }
+.login__product { font-size: var(--text-lg); font-weight: 600; }
+.login__site { color: var(--text-muted); font-size: var(--text-sm); }
+
+.login__note {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2);
+  color: var(--text-faint);
+  font-size: var(--text-xs);
+}
+.login__note .icon { width: 16px; height: 16px; }
+
+.login__footer { color: var(--text-faint); font-size: var(--text-xs); font-family: var(--font-mono); }

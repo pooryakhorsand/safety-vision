@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% comment %}
+  event_print.html — printable report of the filtered events.
+  Opens the browser print dialog; choose "Save as PDF" for a PDF file.
+  Light theme on purpose (paper). Styles: static/css/pages/print.css.
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Events report" %}{% endblock %}
+{% block body_class %}page-print{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/print.css' %}">{% endblock %}
+
+{% block body %}
+<div class="report">
+  <header class="report__header">
+    <img src="{{ brand.logo_url }}" alt="" width="40" height="40">
+    <div>
+      <h1>{{ brand.product_name }} · {% translate "Events report" %}</h1>
+      <p>{{ brand.site_name }} · {% translate "Printed" %} <span dir="ltr">{{ printed_at|date:"Y-m-d H:i" }}</span> · {{ user.display_name }}</p>
+    </div>
+    <button type="button" class="report__print" onclick="window.print()">{% translate "Print" %}</button>
+  </header>
+
+  {% if form.is_filtered %}
+  <p class="report__filters">
+    {% translate "Filters" %}:
+    {% for field in form %}{% if field.value %}<span>{{ field.label }}: {% if field.field.choices %}{% for value, label in field.field.choices %}{% if value|stringformat:"s" == field.value|stringformat:"s" %}{{ label }}{% endif %}{% endfor %}{% else %}{{ field.value }}{% endif %}</span>{% endif %}{% endfor %}
+  </p>
+  {% endif %}
+
+  <p class="report__count">
+    {% blocktranslate count total=total %}{{ total }} event{% plural %}{{ total }} events{% endblocktranslate %}
+    {% if total > limit %} · {% blocktranslate %}showing the first {{ limit }}{% endblocktranslate %}{% endif %}
+  </p>
+
+  <table class="report__table">
+    <thead>
+      <tr>
+        <th>{% translate "Time" %}</th><th>{% translate "Duration" %}</th><th>{% translate "Camera" %}</th>
+        <th>{% translate "Module" %}</th><th>{% translate "Event type" %}</th><th>{% translate "Person" %}</th><th>{% translate "Track ID" %}</th>
+        <th>{% translate "Status" %}</th><th>{% translate "Note" %}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for event in events %}
+      <tr>
+        <td dir="ltr">{{ event.started_at|date:"Y-m-d H:i:s" }}</td>
+        <td dir="ltr">{% if event.is_ongoing %}{% translate "Ongoing" %}{% else %}{{ event.duration|hms }}{% endif %}</td>
+        <td dir="ltr">{{ event.camera_name }}</td>
+        <td>{{ event.module_name }}</td>
+        <td>{{ event.type_name }}{% if event.occurrences > 1 %} (×{{ event.occurrences }}){% endif %}</td>
+        <td>{{ event.person.label }}</td>
+        <td dir="ltr">{% if event.track_id is not None %}#{{ event.track_id }}{% endif %}</td>
+        <td>{{ event.get_status_display }}{% if event.acknowledged_by %} · {{ event.acknowledged_by.display_name }}{% endif %}</td>
+        <td>{{ event.note }}</td>
+      </tr>
+      {% empty %}
+      <tr><td colspan="9">{% translate "No events found" %}</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+<script>window.addEventListener("load", function () { window.print(); });</script>
+{% endblock %}

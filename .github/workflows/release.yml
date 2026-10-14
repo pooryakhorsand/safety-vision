@@ -1,0 +1,88 @@
+name: Release
+
+# Push a tag such as v1.0.0 to build the Windows installers and create a DRAFT release.
+# No model weights are built or published (see docs/models.md).
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    name: Tests before release
+    runs-on: ubuntu-latest
+    env:
+      DJANGO_DEBUG: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+      - run: pip install -r requirements-dev.txt
+      - name: Tag matches the VERSION file
+        run: test "v$(cat VERSION | tr -d '[:space:]')" = "${GITHUB_REF_NAME}"
+      - name: Translations compile
+        run: python scripts/compile_translations.py
+      - name: Web tests
+        working-directory: web
+        run: python manage.py test
+      - name: Engine and desktop tests
+        run: python -m pytest engine/tests desktop/tests -q
+
+  build:
+    name: Installer (${{ matrix.variant }})
+    needs: check
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        variant: [gpu, cpu]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install Inno Setup
+        run: choco install innosetup --no-progress -y
+        shell: pwsh
+      - name: Install uv
+        run: pip install uv
+      - name: Build runtimes
+        shell: pwsh
+        run: |
+          if ("${{ matrix.variant }}" -eq "cpu") { ./desktop/build/build_runtimes.ps1 -Cpu } else { ./desktop/build/build_runtimes.ps1 }
+      - name: Build app
+        shell: pwsh
+        run: ./desktop/build/build_app.ps1
+      - name: Build installer
+        shell: pwsh
+        run: ./desktop/build/build_installer.ps1 -Variant ${{ matrix.variant }} -DownloadRedist
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installer-${{ matrix.variant }}
+          path: desktop/installer/Output/*
+          if-no-files-found: error
+
+  publish:
+    name: Draft release
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+      - name: Checksums
+        working-directory: dist
+        run: sha256sum * > SHA256SUMS.txt
+      - name: Create draft release
+        uses: softprops/action-gh-release@v2
+        with:
+          draft: true
+          generate_release_notes: true
+          files: dist/*

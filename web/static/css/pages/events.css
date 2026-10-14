@@ -1,0 +1,73 @@
+/* ==========================================================================
+   events.css — management channel: filter bar, events table, event detail.
+   Severity colour is shown by a small dot / left edge only.
+   ========================================================================== */
+
+/* ---- Filter bar ------------------------------------------------------------ */
+.filter-bar {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: var(--gap-3);
+  align-items: end;
+}
+.field--compact input, .field--compact select { height: 34px; font-size: var(--text-sm); }
+.filter-bar__actions { display: flex; gap: var(--gap-2); }
+input[type="date"] { color-scheme: dark; }
+
+/* ---- Severity ---------------------------------------------------------------- */
+.severity-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-inline-end: var(--gap-2);
+  vertical-align: middle;
+  background: var(--offline);
+}
+.severity--info .severity-dot { background: var(--accent); }
+.severity--warning .severity-dot { background: var(--warn); }
+.severity--critical .severity-dot { background: var(--alarm); }
+
+/* ---- Events table ------------------------------------------------------------ */
+.event-table td { vertical-align: middle; }
+.event-table tbody tr:hover { background: var(--bg-panel-raised); }
+.event-table .table__actions form { display: inline; }
+.event-table__thumb { width: 84px; }
+.thumb {
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 40px;
+  border-radius: var(--radius-small);
+  background: var(--bg-video);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  color: var(--text-faint);
+}
+.thumb img { width: 100%; height: 100%; object-fit: cover; }
+.thumb .icon { width: 16px; height: 16px; }
+.event-row.severity--critical td:first-child { box-shadow: inset 3px 0 0 var(--alarm); }
+[dir="rtl"] .event-row.severity--critical td:first-child { box-shadow: inset -3px 0 0 var(--alarm); }
+
+/* ---- Event detail ------------------------------------------------------------- */
+.event-title { display: flex; align-items: center; }
+.event-detail {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 340px;
+  gap: var(--gap-4);
+  align-items: start;
+}
+.event-detail__media { background: var(--bg-video); }
+.event-detail__media img { width: 100%; height: auto; }
+.event-detail__side { display: flex; flex-direction: column; gap: var(--gap-4); }
+.event-detail__uid { color: var(--text-faint); font-family: var(--font-mono); font-size: var(--text-xs); text-align: center; }
+
+.facts { display: grid; grid-template-columns: auto 1fr; gap: var(--gap-2) var(--gap-4); margin: 0; font-size: var(--text-sm); }
+.facts dt { color: var(--text-muted); }
+.facts dd { margin: 0; }
+
+textarea { height: auto; padding-block: var(--gap-2); resize: vertical; }
+
+@media (max-width: 1000px) {
+  .event-detail { grid-template-columns: minmax(0, 1fr); }
+}

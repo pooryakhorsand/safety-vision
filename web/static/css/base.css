@@ -1,0 +1,58 @@
+/* ==========================================================================
+   base.css — reset and default element styles.
+   Logical properties (margin-inline-start, padding-inline, ...) are used
+   everywhere so the layout mirrors automatically between fa (rtl) and en (ltr).
+   ========================================================================== */
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg-app);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: var(--text-md);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3, p { margin: 0; }
+
+a { color: inherit; text-decoration: none; }
+
+img, svg { display: block; }
+
+button, input, select, textarea { font: inherit; color: inherit; }
+
+input, select, textarea {
+  width: 100%;
+  height: 38px;
+  padding-inline: var(--gap-3);
+  background: var(--bg-input);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  outline: none;
+}
+input:focus, select:focus, textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+}
+
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* Icons from static/icons/icons.svg ({% icon %} tag) */
+.icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+[dir="rtl"] .icon.flip-rtl { transform: scaleX(-1); }
+
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}

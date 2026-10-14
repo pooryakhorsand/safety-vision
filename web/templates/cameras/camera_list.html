@@ -1,0 +1,65 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  camera_list.html — admin only: cameras, their source and live state.
+  View: apps/cameras/views.py (camera_list). Live state comes from the engine heartbeat.
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Cameras" %}{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'dashboard:settings' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "Settings" %}</a>
+      <h1 class="page__title">{% translate "Cameras" %}</h1>
+      {% if not engine_online %}<p class="page__subtitle">{% translate "The engine is not reporting, so live states are unknown." %}</p>{% endif %}
+    </div>
+    <a class="btn btn--primary" href="{% url 'cameras:create' %}">{% icon "plus" %}<span>{% translate "Add camera" %}</span></a>
+  </header>
+
+  <div class="panel panel--flush">
+    {% if rows %}
+    <table class="table">
+      <thead>
+        <tr>
+          <th>{% translate "Name" %}</th>
+          <th>{% translate "Source" %}</th>
+          <th>{% translate "Modules" %}</th>
+          <th>{% translate "State" %}</th>
+          <th class="table__actions"></th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in rows %}
+        <tr>
+          <td dir="ltr" class="table__ltr">{{ row.camera.name }}</td>
+          <td dir="ltr" class="table__ltr">{{ row.source }}</td>
+          <td>{% for key in row.camera.modules %}<span class="badge badge--accent">{{ key }}</span> {% empty %}<span class="badge">{% translate "All" %}</span>{% endfor %}</td>
+          <td>
+            {% if row.state == "online" %}<span class="badge badge--ok">{% translate "Online" %}</span>{% if row.fps is not None %} <span class="table__ltr" dir="ltr">{{ row.fps|floatformat:0 }} FPS</span>{% endif %}
+            {% elif row.state == "offline" %}<span class="badge badge--alarm">{% translate "Offline" %}</span>
+            {% elif row.state == "disabled" %}<span class="badge badge--muted">{% translate "Disabled" %}</span>
+            {% else %}<span class="badge badge--muted">{% translate "Unknown" %}</span>{% endif %}
+          </td>
+          <td class="table__actions">
+            <a class="btn btn--small" href="{% url 'cameras:edit' row.camera.pk %}">{% translate "Edit" %}</a>
+            <form method="post" action="{% url 'cameras:toggle' row.camera.pk %}">
+              {% csrf_token %}
+              <button type="submit" class="btn btn--small">{% if row.camera.is_enabled %}{% translate "Disable" %}{% else %}{% translate "Enable" %}{% endif %}</button>
+            </form>
+            <a class="btn btn--small btn--ghost" href="{% url 'cameras:delete' row.camera.pk %}">{% translate "Delete" %}</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <div class="empty-state">
+      {% icon "camera" %}
+      <h2>{% translate "No cameras yet" %}</h2>
+      <p>{% translate "Add a camera to start watching." %}</p>
+    </div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

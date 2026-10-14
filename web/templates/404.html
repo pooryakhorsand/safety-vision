@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% comment %} 404.html — page not found (only used when DEBUG=False). {% endcomment %}{% load i18n ui_tags %}
+
+{% block title %}{% translate "Page not found" %}{% endblock %}
+
+{% block body %}
+<div class="page">
+  <div class="panel empty-state">
+    {% icon "alert-triangle" %}
+    <h2>{% translate "Page not found" %}</h2>
+    <a class="btn" href="/">{% translate "Back to overview" %}</a>
+  </div>
+</div>
+{% endblock %}

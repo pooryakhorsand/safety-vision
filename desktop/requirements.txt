@@ -1,0 +1,4 @@
+# Extra packages of the launcher (installed in the web runtime together with ../requirements.txt).
+pywebview>=5.0,<7        # native window around the console (uses the Edge WebView2 runtime)
+pystray>=0.19,<1         # tray icon
+Pillow>=10,<12           # tray icon image

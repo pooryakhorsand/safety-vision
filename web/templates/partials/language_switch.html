@@ -1,0 +1,13 @@
+{% comment %}
+  language_switch.html — fa / en toggle. Uses Django's built-in
+  set_language view; the choice is stored in a cookie.
+{% endcomment %}{% load i18n %}{% get_current_language as LANG %}{% get_available_languages as LANGS %}
+<form class="lang-switch" method="post" action="{% url 'set_language' %}">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.get_full_path }}">
+  {% for code, name in LANGS %}
+    <button type="submit" name="language" value="{{ code }}"
+            class="lang-switch__btn {% if code == LANG %}is-active{% endif %}"
+            {% if code == LANG %}aria-current="true"{% endif %}>{{ code|upper }}</button>
+  {% endfor %}
+</form>

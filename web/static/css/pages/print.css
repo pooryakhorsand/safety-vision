@@ -1,0 +1,24 @@
+/* print.css — printable events report (light, paper-friendly). */
+
+body.page-print { background: #fff; color: #111; }
+
+.report { padding: 24px; font-size: 12px; }
+.report__header { display: flex; align-items: center; gap: 12px; border-block-end: 2px solid #111; padding-block-end: 12px; margin-block-end: 12px; }
+.report__header h1 { font-size: 18px; font-weight: 600; }
+.report__header p { color: #555; }
+.report__print { margin-inline-start: auto; padding: 6px 14px; border: 1px solid #999; border-radius: 4px; background: #f3f3f3; cursor: pointer; }
+.report__filters { color: #444; margin-block-end: 6px; }
+.report__filters span { margin-inline-end: 12px; }
+.report__count { color: #444; margin-block-end: 10px; }
+
+.report__table { width: 100%; border-collapse: collapse; }
+.report__table th, .report__table td { border: 1px solid #ccc; padding: 4px 6px; text-align: start; }
+.report__table th { background: #eee; }
+.report__table tr { break-inside: avoid; }
+.report__table td[dir="ltr"] { text-align: start; unicode-bidi: plaintext; }
+
+@media print {
+  .report { padding: 0; }
+  .report__print { display: none; }
+  @page { size: A4 landscape; margin: 12mm; }
+}

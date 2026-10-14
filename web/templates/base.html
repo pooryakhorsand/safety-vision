@@ -1,0 +1,24 @@
+{% comment %}
+  base.html — the outer HTML document for every page.
+  Sets language + direction (fa = rtl, en = ltr), loads global CSS,
+  and applies the profile's accent colour.
+  Pages normally extend app_shell.html, not this file directly.
+{% endcomment %}{% load static i18n %}{% get_current_language as LANG %}{% get_current_language_bidi as IS_RTL %}<!doctype html>
+<html lang="{{ LANG }}" dir="{% if IS_RTL %}rtl{% else %}ltr{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}{% endblock %} · {{ brand.product_name }}</title>
+  <link rel="icon" href="{{ brand.logo_url }}">
+  <link rel="stylesheet" href="{% static 'css/tokens.css' %}">
+  <link rel="stylesheet" href="{% static 'css/base.css' %}">
+  <link rel="stylesheet" href="{% static 'css/components.css' %}">
+  <link rel="stylesheet" href="{% static 'css/layout.css' %}">
+  {% block page_css %}{% endblock %}
+  <style>:root { --accent: {{ brand.accent_color }}; }</style>
+</head>
+<body class="{% block body_class %}{% endblock %}">
+  {% block body %}{% endblock %}
+  {% block page_js %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,19 @@
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = ["**/migrations/**", "desktop/runtime", "build", "dist"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = [
+    "E501",    # long lines are checked by the formatter, not as errors
+    "B905",    # zip() without strict=
+    "UP037",   # quoted annotations are kept where a class refers to itself
+]
+
+[tool.ruff.lint.isort]
+known-first-party = ["engine", "apps", "web_config"]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["engine/tests", "desktop/tests"]

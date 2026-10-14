@@ -1,0 +1,77 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  live.html — the operator's main screen.
+      [module sidebar] [toolbar / camera grid / event strip]
+  Layout buttons come from the view (layout_options): 2 cameras -> 1 and 2 only.
+  Paging and full-tile view are handled by static/js/camera_grid.js.
+  Each tile shows the engine's MJPEG stream (Django only displays it).
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Live view" %}{% endblock %}
+{% block body_class %}page-live{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/live.css' %}">{% endblock %}
+
+{% block content %}
+<div class="live">
+  {% include "partials/module_sidebar.html" %}
+
+  <section class="live__main">
+    <div class="live-toolbar">
+      <div class="live-toolbar__module">
+        {% if active_module %}{% icon active_module.icon %}<strong>{{ active_module.name }}</strong>{% endif %}
+        <span class="live-toolbar__count">{{ cameras|length }} {% translate "cameras" %}</span>
+      </div>
+
+      <div class="live-toolbar__controls">
+        <div class="segmented" role="group" aria-label="{% translate 'Grid layout' %}">
+          {% for size in layout_options %}
+          <button type="button" class="segmented__btn" data-layout="{{ size }}">{{ size }}</button>
+          {% endfor %}
+        </div>
+        <div class="pager" id="grid-pager">
+          <button type="button" class="btn btn--small btn--icon" data-page="prev" aria-label="{% translate 'Previous page' %}">{% icon "chevron-left" "flip-rtl" %}</button>
+          <span class="pager__label" id="grid-page-label" dir="ltr">1 / 1</span>
+          <button type="button" class="btn btn--small btn--icon" data-page="next" aria-label="{% translate 'Next page' %}">{% icon "chevron-right" "flip-rtl" %}</button>
+        </div>
+      </div>
+    </div>
+
+    {% if cameras %}
+    <div class="camera-grid" id="camera-grid" data-layout="{{ default_layout }}" data-default-layout="{{ default_layout }}" data-active-module="{{ active_module.key }}"
+         data-stream-url="{{ stream_url }}" data-label-online="{% translate 'Online' %}" data-label-offline="{% translate 'Offline' %}" data-label-recorded="{% translate 'Recorded' %}">
+      {% for camera in cameras %}
+      <article class="camera-tile" data-camera-id="{{ camera.pk }}" tabindex="0">
+        <header class="camera-tile__header">
+          <span class="status-dot status-dot--offline" title="{% translate 'Offline' %}"></span>
+          <span class="camera-tile__name" dir="ltr">{{ camera.name }}</span>
+          {% if camera.group %}<span class="camera-tile__group">{{ camera.group }}</span>{% endif %}
+          <span class="badge badge--muted camera-tile__mode" hidden></span>
+          <span class="camera-tile__fps" dir="ltr">— FPS</span>
+          <button type="button" class="camera-tile__expand btn--icon" data-action="expand"
+                  aria-label="{% translate 'Expand camera' %}" title="{% translate 'Expand camera' %}">{% icon "maximize" %}</button>
+        </header>
+        <div class="camera-tile__view">
+          {# <img> is filled by camera_grid.js with ENGINE_STREAM_URL/stream/<id> while the camera is online. #}
+          <img class="camera-tile__stream" alt="" hidden>
+          <div class="camera-tile__placeholder">
+            {% icon "video-off" %}
+            <span>{% translate "No signal" %}</span>
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="panel empty-state">
+      {% icon "camera" %}
+      <h2>{% translate "No cameras for this module" %}</h2>
+      <p>{% translate "An administrator can add cameras and assign modules from Settings." %}</p>
+    </div>
+    {% endif %}
+
+    {% include "partials/event_strip.html" %}
+  </section>
+</div>
+{% endblock %}
+
+{% block page_js %}<script src="{% static 'js/camera_grid.js' %}" defer></script>{% endblock %}

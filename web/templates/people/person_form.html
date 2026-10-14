@@ -1,0 +1,34 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  person_form.html — add or edit a person (admin only).
+  View: apps/people/views.py (person_create, person_edit).
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% if person %}{% translate "Edit person" %}{% else %}{% translate "Add person" %}{% endif %}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/events.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'people:list' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "People" %}</a>
+      <h1 class="page__title">{% if person %}{% translate "Edit person" %}{% else %}{% translate "Add person" %}{% endif %}</h1>
+    </div>
+  </header>
+
+  <form method="post" class="panel form" novalidate>
+    {% csrf_token %}
+    {% for field in form %}
+    <label class="field {% if field.errors %}has-error{% endif %}">
+      <span class="field__label">{{ field.label }}</span>
+      {{ field }}
+      {% for error in field.errors %}<span class="field__error">{{ error }}</span>{% endfor %}
+    </label>
+    {% endfor %}
+    <div>
+      <button type="submit" class="btn btn--primary">{% icon "check" %}<span>{% translate "Save" %}</span></button>
+      <a class="btn btn--ghost" href="{% if person %}{% url 'people:detail' person.pk %}{% else %}{% url 'people:list' %}{% endif %}">{% translate "Cancel" %}</a>
+    </div>
+  </form>
+</div>
+{% endblock %}

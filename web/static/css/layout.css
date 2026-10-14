@@ -1,0 +1,92 @@
+/* ==========================================================================
+   layout.css — the application frame:
+       .app-shell  = navbar / main / status bar (fills the window)
+       .navbar     = top bar
+       .status-bar = bottom bar
+   ========================================================================== */
+
+.app-shell {
+  display: grid;
+  grid-template-rows: var(--navbar-height) 1fr var(--statusbar-height);
+  height: 100vh;
+}
+
+.app-main {
+  overflow: auto;
+  min-height: 0;
+}
+
+/* ---- Navbar --------------------------------------------------------------- */
+.navbar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-5);
+  padding-inline: var(--gap-4);
+  background: var(--bg-panel);
+  border-block-end: 1px solid var(--line);
+}
+
+.navbar__brand { display: flex; align-items: center; gap: var(--gap-3); }
+.navbar__titles { display: flex; flex-direction: column; line-height: 1.2; }
+.navbar__product { font-weight: 600; font-size: var(--text-md); white-space: nowrap; }
+.navbar__site { font-size: var(--text-xs); color: var(--text-muted); }
+
+.navbar__links { display: flex; gap: var(--gap-1); height: 100%; }
+.navbar__link {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2);
+  padding-inline: var(--gap-3);
+  color: var(--text-muted);
+  border-block-end: 2px solid transparent;
+  white-space: nowrap;
+}
+.navbar__link:hover { color: var(--text); }
+.navbar__link.is-active { color: var(--text); border-block-end-color: var(--accent); }
+
+.navbar__tools {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+  margin-inline-start: auto;
+}
+
+.alarm-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--gap-1);
+  color: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+}
+.alarm-counter.has-alarms { color: var(--alarm); }
+
+.user-chip {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-2);
+  padding-inline-start: var(--gap-3);
+  border-inline-start: 1px solid var(--line);
+  color: var(--text-muted);
+}
+.user-chip__name { color: var(--text); white-space: nowrap; }
+
+/* ---- Status bar ----------------------------------------------------------- */
+.status-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-4);
+  padding-inline: var(--gap-4);
+  background: var(--bg-panel);
+  border-block-start: 1px solid var(--line);
+  color: var(--text-muted);
+  font-size: var(--text-xs);
+}
+.status-bar__item { display: inline-flex; align-items: center; gap: var(--gap-1); white-space: nowrap; }
+.status-bar__item .icon { width: 14px; height: 14px; }
+.status-bar__spacer { flex: 1; }
+.status-bar time { font-family: var(--font-mono); }
+
+/* Narrow screens: keep icons, hide link text */
+@media (max-width: 1100px) {
+  .navbar__link span, .navbar__site, .user-chip__name { display: none; }
+}

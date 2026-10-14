@@ -1,0 +1,147 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  overview.html — management summary for today / 7 days / 30 days.
+  All numbers come from apps/events/report.py (build_report); nothing is computed here.
+  Module cards show today's count live (static/js/live_events.js) only when the period is "today".
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Overview" %}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/overview.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <h1 class="page__title">{% translate "Overview" %}</h1>
+    <div class="page__actions">
+      <nav class="segmented" aria-label="{% translate 'Period' %}">
+        {% for key, label in periods %}
+        <a class="segmented__item {% if key == report.period %}is-active{% endif %}" href="?period={{ key }}"{% if key == report.period %} aria-current="true"{% endif %}>{{ label }}</a>
+        {% endfor %}
+      </nav>
+      <a class="btn" href="{{ report.urls.print }}" target="_blank" rel="noopener">{% icon "printer" %}<span>{% translate "Print report" %}</span></a>
+    </div>
+  </header>
+
+  <section class="overview-grid">
+    <a class="panel stat-card" href="{{ report.urls.period_events }}">
+      <header class="stat-card__header">
+        <span class="stat-card__icon">{% icon "list-details" %}</span>
+        <span class="stat-card__name">{% translate "Events" %}</span>
+      </header>
+      <div class="stat-card__value">{{ report.total }}</div>
+      <div class="stat-card__label">
+        {% if report.compare.direction == "up" %}<span class="trend trend--up">▲ {% blocktranslate with n=report.compare.diff %}{{ n }} more than the previous period{% endblocktranslate %}</span>
+        {% elif report.compare.direction == "down" %}<span class="trend trend--down">▼ {% blocktranslate with n=report.compare.diff %}{{ n }} fewer than the previous period{% endblocktranslate %}</span>
+        {% else %}{% translate "Same as previous period" %}{% endif %}
+      </div>
+    </a>
+
+    <a class="panel stat-card stat-card--alarm" href="{{ report.urls.period_events }}">
+      <header class="stat-card__header">
+        <span class="stat-card__icon">{% icon "alert-triangle" %}</span>
+        <span class="stat-card__name">{% translate "Critical" %}</span>
+      </header>
+      <div class="stat-card__value">{{ report.critical }}</div>
+      <div class="stat-card__label">{% translate "In this period" %}</div>
+    </a>
+
+    <a class="panel stat-card" href="{{ report.urls.not_acknowledged }}">
+      <header class="stat-card__header">
+        <span class="stat-card__icon">{% icon "bell" %}</span>
+        <span class="stat-card__name">{% translate "Not acknowledged" %}</span>
+      </header>
+      <div class="stat-card__value">{{ report.not_acknowledged }}</div>
+      <div class="stat-card__label">{% translate "In this period" %}</div>
+    </a>
+
+    <a class="panel stat-card {% if report.going_on %}stat-card--alarm{% endif %}" href="{{ report.urls.open_all }}">
+      <header class="stat-card__header">
+        <span class="stat-card__icon">{% icon "activity" %}</span>
+        <span class="stat-card__name">{% translate "Going on now" %}</span>
+      </header>
+      <div class="stat-card__value">{{ report.going_on }}</div>
+      <div class="stat-card__label">{% translate "Violations that have not ended" %}</div>
+    </a>
+
+    <div class="panel stat-card">
+      <header class="stat-card__header">
+        <span class="stat-card__icon">{% icon "camera" %}</span>
+        <span class="stat-card__name">{% translate "Cameras" %}</span>
+      </header>
+      <div class="stat-card__value" dir="ltr">{{ cameras_online }} / {{ camera_count }}</div>
+      <div class="stat-card__label">{% translate "Online" %}</div>
+      <div class="stat-card__desc">{% translate "Cameras report online when the engine is running." %}</div>
+    </div>
+  </section>
+
+  <section class="overview-grid overview-grid--modules">
+    {% for module, count in report.module_cards %}
+    <a class="panel stat-card" href="{% url 'dashboard:live' %}?module={{ module.key }}">
+      <header class="stat-card__header">
+        <span class="stat-card__icon">{% icon module.icon %}</span>
+        <span class="stat-card__name">{{ module.name }}</span>
+      </header>
+      <div class="stat-card__value"{% if report.period == "today" %} data-today-count="{{ module.key }}"{% endif %}>{{ count }}</div>
+      <div class="stat-card__label">{% if report.period == "today" %}{% translate "Events today" %}{% else %}{% translate "Events in this period" %}{% endif %}</div>
+      <div class="stat-card__desc">{{ module.description }}</div>
+    </a>
+    {% endfor %}
+  </section>
+
+  <section class="panel">
+    <header class="panel__header"><h2 class="panel__title">{% icon "clock" %}{% translate "Events over time" %}</h2></header>
+    {% if report.chart_empty %}
+    <p class="empty-note">{% translate "No events in this period" %}</p>
+    {% else %}
+    <div class="bars" dir="ltr">
+      {% for bar in report.chart %}
+      <div class="bars__col" title="{{ bar.label }} · {{ bar.count }}">
+        <div class="bars__track"><div class="bars__bar" style="height: {{ bar.height }}%"></div></div>
+        <div class="bars__label">{% if bar.show_label %}{{ bar.label }}{% endif %}</div>
+      </div>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </section>
+
+  <section class="overview-split">
+    <div class="panel">
+      <header class="panel__header"><h2 class="panel__title">{% icon "list-details" %}{% translate "By event type" %}</h2></header>
+      {% include "dashboard/_breakdown.html" with rows=report.by_type %}
+    </div>
+    <div class="panel">
+      <header class="panel__header"><h2 class="panel__title">{% icon "camera" %}{% translate "By camera" %}</h2></header>
+      {% include "dashboard/_breakdown.html" with rows=report.by_camera %}
+    </div>
+  </section>
+
+  <section class="panel">
+    <header class="panel__header">
+      <h2 class="panel__title">{% icon "bell" %}{% translate "Needs attention" %}</h2>
+      <a class="btn btn--small" href="{{ report.urls.open_all }}">{% translate "See all" %}</a>
+    </header>
+    {% if report.attention %}
+    <table class="table table--compact">
+      <thead><tr>
+        <th>{% translate "Time" %}</th><th>{% translate "Camera" %}</th><th>{% translate "Event type" %}</th><th>{% translate "Severity" %}</th><th></th>
+      </tr></thead>
+      <tbody>
+        {% for item in report.attention %}
+        <tr>
+          <td dir="ltr" class="table__ltr"><a href="{{ item.url }}">{{ item.time|date:"Y-m-d H:i" }}</a></td>
+          <td dir="ltr" class="table__ltr">{{ item.camera }}</td>
+          <td>{{ item.type }}</td>
+          <td><span class="badge {% if item.severity == 'critical' %}badge--alarm{% elif item.severity == 'warning' %}badge--warn{% else %}badge--accent{% endif %}">{{ item.severity_label }}</span></td>
+          <td>{% if item.ongoing %}<span class="badge badge--alarm">{% translate "Ongoing" %}</span>{% endif %}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}
+    <p class="empty-note">{% translate "Nothing waiting. All alarms are acknowledged." %}</p>
+    {% endif %}
+  </section>
+
+  {% include "partials/event_strip.html" %}
+</div>
+{% endblock %}

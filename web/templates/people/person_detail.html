@@ -1,0 +1,60 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  person_detail.html — one person: violations of the last days and recent events.
+  View: apps/people/views.py (person_detail).
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{{ person.full_name }}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/events.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'people:list' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "People" %}</a>
+      <h1 class="page__title">{{ person.full_name }}</h1>
+      <p class="page__subtitle"><span dir="ltr">{{ person.employee_code }}</span>{% if person.department %} · {{ person.department }}{% endif %}</p>
+    </div>
+    {% if user.is_admin %}
+    <div class="page__actions">
+      <a class="btn" href="{% url 'people:edit' person.pk %}">{% icon "pencil" %}<span>{% translate "Edit" %}</span></a>
+      <form method="post" action="{% url 'people:toggle_active' person.pk %}">
+        {% csrf_token %}
+        <button type="submit" class="btn">{% if person.is_active %}{% translate "Deactivate" %}{% else %}{% translate "Activate" %}{% endif %}</button>
+      </form>
+    </div>
+    {% endif %}
+  </header>
+
+  <section class="panel">
+    <h2 class="panel__title">{% blocktranslate %}Last {{ days }} days{% endblocktranslate %} · {{ total_events }}</h2>
+    {% if by_type %}
+    <table class="table table--compact">
+      <thead><tr><th>{% translate "Event type" %}</th><th>{% translate "Events" %}</th><th>{% translate "Occurrences" %}</th></tr></thead>
+      <tbody>
+        {% for row in by_type %}<tr><td>{{ row.name }}</td><td class="table__ltr">{{ row.events }}</td><td class="table__ltr">{{ row.times }}</td></tr>{% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="panel__text">{% translate "No events in this period." %}</p>{% endif %}
+  </section>
+
+  <section class="panel panel--flush">
+    <h2 class="panel__title">{% translate "Recent events" %}</h2>
+    {% if recent_events %}
+    <table class="table">
+      <thead><tr><th>{% translate "Time" %}</th><th>{% translate "Camera" %}</th><th>{% translate "Event type" %}</th><th></th></tr></thead>
+      <tbody>
+        {% for event in recent_events %}
+        <tr>
+          <td class="table__ltr nowrap">{{ event.started_at|date:"Y-m-d H:i" }}</td>
+          <td class="table__ltr">{{ event.camera_name }}</td>
+          <td>{{ event.type_name }}{% if event.occurrences > 1 %} <span class="badge" dir="ltr">×{{ event.occurrences }}</span>{% endif %}</td>
+          <td class="table__actions"><a class="btn btn--small" href="{% url 'events:detail' event.pk %}">{% translate "Open" %}</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% else %}<p class="panel__text">{% translate "No events yet." %}</p>{% endif %}
+  </section>
+</div>
+{% endblock %}

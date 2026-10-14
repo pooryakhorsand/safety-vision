@@ -1,0 +1,31 @@
+/* settings.css — settings page: users, cameras and modules panels. */
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: var(--gap-4);
+  align-items: start;
+}
+
+.settings-grid .badge { margin-block: 2px; }
+
+.setting-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.setting-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--gap-3);
+  padding-block: var(--gap-2);
+  border-block-end: 1px solid var(--line);
+}
+.setting-list__item:last-child { border-block-end: none; }
+.setting-list__icon {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+.setting-list__text { display: flex; flex-direction: column; flex: 1; min-width: 0; line-height: 1.35; }
+.setting-list__text small { color: var(--text-faint); font-size: var(--text-xs); }

@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% comment %}
+  setup.html — first run: create the first administrator, pick language and site name.
+  View: apps/core/setup_views.py. Only reachable while no user exists.
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{% translate "Set up" %}{% endblock %}
+{% block body_class %}page-login{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/login.css' %}">{% endblock %}
+
+{% block body %}
+<div class="login">
+  <section class="login__card">
+    <header class="login__header">
+      <img src="{{ brand.logo_url }}" alt="" width="56" height="56">
+      <h1 class="login__product">{{ brand.product_name }}</h1>
+      <p class="login__site">{% translate "Create the first administrator account." %}</p>
+    </header>
+
+    <form method="post" class="form" novalidate>
+      {% csrf_token %}
+      {% for field in form %}
+      <label class="field {% if field.errors %}has-error{% endif %}">
+        <span class="field__label">{{ field.label }}</span>
+        {{ field }}
+        {% if field.help_text %}<span class="field__hint">{{ field.help_text }}</span>{% endif %}
+        {% for error in field.errors %}<span class="field__error">{{ error }}</span>{% endfor %}
+      </label>
+      {% endfor %}
+      <button type="submit" class="btn btn--primary btn--block">{% icon "check" %}<span>{% translate "Create and continue" %}</span></button>
+    </form>
+  </section>
+  <footer class="login__footer">v{{ app_version }}</footer>
+</div>
+{% endblock %}

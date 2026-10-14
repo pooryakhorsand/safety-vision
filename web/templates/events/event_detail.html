@@ -1,0 +1,86 @@
+{% extends "app_shell.html" %}
+{% comment %}
+  event_detail.html — one event: snapshot, facts, acknowledge form.
+  View: apps/events/views.py (event_detail, event_acknowledge).
+{% endcomment %}{% load static i18n ui_tags %}
+
+{% block title %}{{ event.type_name }}{% endblock %}
+{% block page_css %}<link rel="stylesheet" href="{% static 'css/pages/events.css' %}">{% endblock %}
+
+{% block content %}
+<div class="page">
+  <header class="page__header">
+    <div>
+      <a class="page__back" href="{% url 'events:list' %}">{% icon "chevron-left" "flip-rtl" %}{% translate "Events" %}</a>
+      <h1 class="page__title event-title severity--{{ event.severity }}"><span class="severity-dot"></span>{{ event.type_name }}</h1>
+    </div>
+    {% if event.is_open %}<span class="badge badge--warn">{% translate "Open" %}</span>
+    {% else %}<span class="badge badge--ok">{% translate "Acknowledged" %}</span>{% endif %}
+  </header>
+
+  <div class="event-detail">
+    <section class="panel panel--flush event-detail__media">
+      {% if event.snapshot %}
+      <img src="{% url 'events:snapshot' event.pk %}" alt="{% translate 'Event snapshot' %}">
+      {% else %}
+      <div class="empty-state">{% icon "camera" %}<p>{% translate "No snapshot for this event." %}</p></div>
+      {% endif %}
+    </section>
+
+    <aside class="event-detail__side">
+      <section class="panel">
+        <dl class="facts">
+          <dt>{% translate "Module" %}</dt><dd>{{ event.module_name }}</dd>
+          <dt>{% translate "Camera" %}</dt><dd dir="ltr" class="table__ltr">{{ event.camera_name }}</dd>
+          <dt>{% translate "Track ID" %}</dt><dd dir="ltr" class="table__ltr">{% if event.track_id is not None %}#{{ event.track_id }}{% else %}—{% endif %}</dd>
+          <dt>{% translate "Severity" %}</dt><dd>{{ event.get_severity_display }}</dd>
+          <dt>{% translate "Started at" %}</dt><dd dir="ltr" class="table__ltr">{{ event.started_at|date:"Y-m-d H:i:s" }}</dd>
+          <dt>{% translate "Ended at" %}</dt><dd dir="ltr" class="table__ltr">{% if event.ended_at %}{{ event.ended_at|date:"Y-m-d H:i:s" }}{% else %}<span class="badge badge--alarm">{% translate "Ongoing" %}</span>{% endif %}</dd>
+          <dt>{% translate "Duration" %}</dt><dd dir="ltr" class="table__ltr">{{ event.duration|hms }}</dd>
+          <dt>{% translate "Occurrences" %}</dt><dd dir="ltr" class="table__ltr">{{ event.occurrences }}</dd>
+          <dt>{% translate "Confidence" %}</dt><dd dir="ltr" class="table__ltr">{% if event.confidence is not None %}{% widthratio event.confidence 1 100 %}%{% else %}—{% endif %}</dd>
+        </dl>
+      </section>
+
+      <section class="panel">
+        <form method="post" action="{% url 'events:assign_person' event.pk %}" class="form">
+          {% csrf_token %}
+          <label class="field">
+            <span class="field__label">{% translate "Who is this?" %}</span>
+            <input type="text" name="person" list="people-list" autocomplete="off" value="{{ event.person.label|default:'' }}" placeholder="{% translate 'Employee code or name' %}">
+            <datalist id="people-list">{% for p in people %}<option value="{{ p.label }}">{% endfor %}</datalist>
+          </label>
+          <button type="submit" class="btn">{% icon "check" %}<span>{% translate "Save" %}</span></button>
+          {% if event.person %}<p class="field__hint">{% translate "Assigned by" %} {{ event.person_assigned_by.display_name|default:"—" }} · <span dir="ltr">{{ event.person_assigned_at|date:"Y-m-d H:i" }}</span> · <a href="{% url 'people:detail' event.person.pk %}">{% translate "Open profile" %}</a></p>{% endif %}
+        </form>
+        {% if history %}
+        <ul class="facts">
+          {% for h in history %}<li dir="ltr" class="table__ltr">{{ h.changed_at|date:"Y-m-d H:i" }} · {{ h.changed_by.display_name|default:"—" }}: {{ h.from_person.employee_code|default:"—" }} → {{ h.to_person.employee_code|default:"—" }}</li>{% endfor %}
+        </ul>
+        {% endif %}
+      </section>
+
+      <section class="panel">
+        {% if event.is_open %}
+        <form method="post" action="{% url 'events:acknowledge' event.pk %}" class="form">
+          {% csrf_token %}
+          <label class="field">
+            <span class="field__label">{% translate "Note (optional)" %}</span>
+            <textarea name="note" rows="3" maxlength="1000" placeholder="{% translate 'Worker was warned on site' %}"></textarea>
+          </label>
+          <button type="submit" class="btn btn--primary">{% icon "check" %}<span>{% translate "Acknowledge" %}</span></button>
+        </form>
+        {% else %}
+        <dl class="facts">
+          <dt>{% translate "Acknowledged by" %}</dt><dd>{{ event.acknowledged_by.display_name|default:"—" }}</dd>
+          <dt>{% translate "Acknowledged at" %}</dt><dd dir="ltr" class="table__ltr">{{ event.acknowledged_at|date:"Y-m-d H:i:s" }}</dd>
+          <dt>{% translate "Note" %}</dt><dd>{{ event.note|default:"—" }}</dd>
+        </dl>
+        {% endif %}
+      </section>
+
+      <p class="event-detail__uid" dir="ltr">{{ event.uid }}</p>
+    </aside>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends "app_shell.html" %}
+{% comment %} 403.html — shown when an operator opens an admin-only page. {% endcomment %}{% load i18n ui_tags %}
+
+{% block title %}{% translate "Access denied" %}{% endblock %}
+
+{% block content %}
+<div class="page">
+  <div class="panel empty-state">
+    {% icon "lock" %}
+    <h2>{% translate "Access denied" %}</h2>
+    <p>{% translate "This page is available to administrators only." %}</p>
+    <a class="btn" href="{% url 'dashboard:overview' %}">{% translate "Back to overview" %}</a>
+  </div>
+</div>
+{% endblock %}
