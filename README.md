@@ -4,14 +4,18 @@ Computer-vision safety monitoring for industrial sites. A local GPU engine watch
 reports missing protective equipment (helmet, safety vest, safety shoes); a web console shows live
 cameras, alarms and events to the operator.
 
-[![CI](https://github.com/OWNER/REPO/actions/workflows/ci.yml/badge.svg)](https://github.com/OWNER/REPO/actions/workflows/ci.yml)
-[![Release](https://img.shields.io/github/v/release/OWNER/REPO?include_prereleases)](https://github.com/OWNER/REPO/releases)
+[![CI](https://github.com/pooryakhorsand/safety-vision/actions/workflows/ci.yml/badge.svg)](https://github.com/pooryakhorsand/safety-vision/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/pooryakhorsand/safety-vision?include_prereleases)](https://github.com/pooryakhorsand/safety-vision/releases)
 ![Python](https://img.shields.io/badge/python-3.11-blue)
 
-<!-- TODO(owner): replace OWNER/REPO in the badges and add a License badge once LICENSE is chosen. -->
+<!-- TODO(owner): replace pooryakhorsand/safety-vision in the badges and add a License badge once LICENSE is chosen. -->
 
 <!-- TODO(owner): add the hero GIF -->
 ![Safety Vision demo](docs/media/hero.gif)
+### Example locations
+![Location 1](docs/media/ppe_demo_first2.gif) ![Location 2](docs/media/ppe_demo_first3.gif)
+![Location 3](docs/media/ppe_demo_second.gif) ![Location 4](docs/media/ppe_demo_third.gif)
+
 
 > Demo footage in this repository is **recorded video**, not a live camera.
 
@@ -74,7 +78,7 @@ A new module is one class in the engine plus one entry in `web/apps/vision_modul
 ## For developers
 
 ```bash
-git clone https://github.com/OWNER/REPO.git && cd REPO
+git clone https://github.com/pooryakhorsand/safety-vision.git && cd REPO
 
 # Web environment
 python -m venv .venv-web && . .venv-web/bin/activate     # Windows: .venv-web\Scripts\activate
@@ -150,5 +154,6 @@ See `LICENSE`.
 - [Django](https://www.djangoproject.com/) (BSD-3-Clause)
 - [Vazirmatn](https://github.com/rastikerdar/vazirmatn) font (SIL OFL 1.1)
 - [Tabler Icons](https://tabler.io/icons) (MIT)
+
 
 
