@@ -1,4 +1,4 @@
-# Safety Vision
+﻿# Safety Vision
 
 Computer-vision safety monitoring for industrial sites. A local GPU engine watches your cameras and
 reports missing protective equipment (helmet, safety vest, safety shoes); a web console shows live
@@ -33,9 +33,9 @@ cameras, alarms and events to the operator.
 
 | | |
 |---|---|
-| ![Overview](docs/media/overview.png) | ![Live view](docs/media/live.png) |
-| ![Events](docs/media/events.png) | ![Event detail](docs/media/event_detail.png) |
-| ![Person profile](docs/media/people.png) | ![First run](docs/media/setup.png) |
+| ![Overview](docs/media/overview.jpg) | ![Live view](docs/media/live.jpg) |
+| ![Events](docs/media/events.jpg) | ![Event detail](docs/media/event_detail.png) |
+| ![Person profile](docs/media/people.jpg) | ![First run](docs/media/settings.jpg) |
 
 ## Download and install
 
@@ -46,7 +46,7 @@ cameras, alarms and events to the operator.
 
 Requirements: Windows 10 or 11 (64-bit), 8 GB RAM, several GB of free disk space. An NVIDIA GPU is strongly recommended; the CPU build is much slower. The installer is not code-signed, so Windows SmartScreen may warn you.
 
-Full instructions: [User guide](docs/user_guide.md) · [راهنمای کاربر](docs/fa/user_guide.md)
+Full instructions: [User guide](docs/user_guide.md) Â· [Ø±Ø§Ù‡Ù†Ù…Ø§ÛŒ Ú©Ø§Ø±Ø¨Ø±](docs/fa/user_guide.md)
 
 ## Architecture
 
@@ -60,7 +60,7 @@ flowchart LR
 ```
 
 The engine does all video processing and never touches the database. The web app owns the database and only displays.
-Details: [docs/architecture.md](docs/architecture.md) · contract: [docs/engine_api.md](docs/engine_api.md).
+Details: [docs/architecture.md](docs/architecture.md) Â· contract: [docs/engine_api.md](docs/engine_api.md).
 
 ## Modules
 
@@ -115,7 +115,7 @@ Building the Windows installer: see [desktop/](desktop/) and `.github/workflows/
 | Secrets, database, ports | `.env` (see `.env.example`); installed app: `<data folder>\config\.env` |
 | Engine: models, thresholds, timings | `engine/config/engine.yaml` (see `engine.example.yaml`) |
 | Product name, logo, colour, language, retention, modules | `profiles/<name>/profile.yaml`, selected with `SITE_PROFILE` |
-| Cameras | In the web console, **Settings → Cameras** |
+| Cameras | In the web console, **Settings â†’ Cameras** |
 
 Another customer or brand: copy `profiles/default/`, edit `profile.yaml` and the logo, set `SITE_PROFILE`.
 
@@ -150,3 +150,4 @@ See `LICENSE`.
 - [Django](https://www.djangoproject.com/) (BSD-3-Clause)
 - [Vazirmatn](https://github.com/rastikerdar/vazirmatn) font (SIL OFL 1.1)
 - [Tabler Icons](https://tabler.io/icons) (MIT)
+
