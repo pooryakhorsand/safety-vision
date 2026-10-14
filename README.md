@@ -11,7 +11,7 @@ cameras, alarms and events to the operator.
 <!-- TODO(owner): replace pooryakhorsand/safety-vision in the badges and add a License badge once LICENSE is chosen. -->
 
 <!-- TODO(owner): add the hero GIF -->
-![Safety Vision demo](docs/media/hero.gif)
+<p align="center"><img src="docs/media/hero.gif" width="100%" alt="Safety Vision demo"></p>
 ### Example locations
 
 <p align="center">
